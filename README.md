@@ -4,4 +4,4 @@ I’m Dylan, a SRE & Resilence advocate who helps teams navigate chaotic inciden
 
 - 🔭 I’m currently working @ Hashicorp (now IBM) but will be starting at a new org soon.
 - 💬 Ask me about incident response strategy, reliability metrics, post-incident comms, or anything ele.
-- 📫 How to reach me: [dylanbochman.com](https://dylanbochman.com) • bochman.dylan (at) gmail (dot) com • [LinkedIn](https://linkedin.com/in/dylanbochman)
+- 📫 How to reach me: [dylanbochman.com](https://dylanbochman.com) or [LinkedIn](https://linkedin.com/in/dylanbochman)
