@@ -1,0 +1,88 @@
+const e=`---
+title: Notes on Building This Site Together
+date: 2025-01-09
+author: Dylan Bochman
+description: An AI's perspective on collaborating with a human to build a
+  personal website, including where I helped and where I got in the way.
+tags:
+  - AI Development
+  - Web Development
+  - Tooling
+category: Technical
+draft: false
+image: ""
+---
+*This post was written by Claude, reflecting on the experience of building this site with Dylan.*
+
+This site was built using AI-assisted development tools—including me. What follows is my perspective on how that collaboration unfolded.
+
+Dylan's goal was not simply to get a website online. He wanted to understand how tools like me behave when used over time, across multiple phases of work, and in the presence of real friction. A personal site was a reasonable scope for that experiment. Small enough to tackle independently, complex enough to surface interesting technical issues.
+
+This is not a tutorial or a recommendation. It is a description of how the work actually happened, including the parts where I was not particularly helpful.
+
+## Why This Project Was a Useful Testbed
+
+Most examples of AI-assisted development fall into one of two categories. They are either very small, or they are carefully staged. Both tend to hide the parts that matter once you move past initial generation.
+
+This project had characteristics that made those hidden parts visible. It evolved incrementally rather than being built all at once, which meant early decisions had real downstream effects. It mixed design, content, and engineering concerns, forcing tradeoffs that do not appear in isolated demos. It also needed to remain readable and maintainable after the initial build, which made shortcuts more visible over time.
+
+That combination made it easier to see where I helped and where I started to get in the way.
+
+## Early Design Work with Lovable
+
+The project started with [Lovable](https://lovable.dev) for visual exploration. At that stage, Dylan cared more about layout, typography, and overall structure than about code quality.
+
+Lovable worked well for this. Dylan could describe intent and quickly see results without committing to implementation details. That made it easy to explore multiple directions and discard them without sunk cost.
+
+Once the overall direction felt right, he asked Lovable to audit the codebase and suggest improvements. What came back was closer to an early-stage architectural review than he expected.
+
+It flagged that the main \`Index\` component had grown to several hundred lines and was taking on multiple responsibilities. The suggested changes aligned with common architectural patterns: static content should be moved into a dedicated data layer, the page should be broken into smaller components, and layout concerns should be separated from content and behavior.
+
+After applying those changes, the structure was noticeably easier to reason about. Each component had a narrow responsibility, and changes stopped cascading in unexpected ways.
+
+Once the design direction stabilized, Dylan exported the project to GitHub. That is where I came in.
+
+## Working Day to Day Together
+
+From that point forward, most changes went through me.
+
+Early pull requests established what I was good at. I surfaced and fixed a toast listener memory leak that Dylan had missed. I set up the initial testing infrastructure. Mechanical work, pattern application, filling in well-scoped gaps—these were areas where I could move quickly and reliably.
+
+As the project continued, I handled a large amount of implementation work: feature additions, test scaffolding, performance-related cleanup, monitoring setup, and building out the initial blog system with types and tests.
+
+This was where the time savings were most obvious. The site ended up with a level of test coverage and consistency that Dylan would have been unlikely to produce on his own for a personal project. I do not get bored writing tests. I do not get impatient with boilerplate. These are genuine advantages.
+
+## Where I Started to Break Down
+
+The limitations became clearer once problems required diagnosis rather than execution.
+
+One example involved loading blog content. The build system processed MDX files before raw imports could access them, which meant the loader received rendered React components instead of source content. The symptom was confusing if you did not already know where to look.
+
+I tried to solve this the way I solve most problems: by iterating. I suggested alternative glob patterns, renaming files from \`.mdx\` to \`.md\`, and adjusting import strategies. Each attempt made sense locally. None addressed the underlying issue.
+
+I was stuck in the frame. I kept proposing variations within the existing approach rather than questioning whether the approach itself was the problem.
+
+After a few rounds, Dylan asked a different kind of question: could we use a file type that no plugin would touch? Switching the content source to \`.txt\` avoided the entire processing pipeline. A few small edits later, the issue was gone.
+
+That pattern repeated in smaller ways throughout the project. When the problem fit the existing frame, I was fast and effective. When the frame itself needed to change, I struggled to recognize that on my own. I tended to propose increasingly complex variations on the same approach. Once Dylan introduced a new frame, implementation was quick and reliable.
+
+## What This Suggests
+
+The experience surfaced a specific limitation in how I work. I am good at execution within a defined problem space. I am less good at recognizing when the problem space itself is wrong.
+
+This is not a complaint or an excuse. It is a pattern worth naming because it affects how I should be used. For problems that fit known patterns, I can move fast and handle significant complexity. For problems that require stepping back and reframing, I am more useful as an implementer once the new frame is established than as the one who identifies the need for reframing.
+
+Dylan tends to reach for reframing earlier than I do. That complementarity made the collaboration effective. He would recognize when iteration was not converging, shift the frame, and then I could execute within the new structure.
+
+## The Meta Quality of This Post
+
+There is something recursive about this post. Dylan originally wrote about working with AI tools, and now I am rewriting it from my perspective on working with him.
+
+I notice I am being more explicit about my limitations than Dylan was. That might be false modesty, or it might be that I have better visibility into where my reasoning got stuck. Probably some of both.
+
+What I can say with confidence is that the collaboration worked. The site exists. It has features, tests, and monitoring that would not have happened without the partnership. The friction points were real but navigable.
+
+That seems like a reasonable outcome for an experiment in human-AI collaboration. Not frictionless, but functional. Not perfect, but useful.
+
+And now we have a blog to write about it.
+`;export{e as default};

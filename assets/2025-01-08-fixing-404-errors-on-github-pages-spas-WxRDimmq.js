@@ -1,0 +1,87 @@
+const e=`---
+title: "The 404s That Weren't Really Errors"
+date: "2025-01-08"
+author: "Dylan Bochman"
+description: "Pre-rendering React routes to eliminate console errors on a statically hosted single page application. Or: why 'it works visually' is not the same as 'it works correctly.'"
+tags:
+  - Reliability
+  - Web Development
+  - SRE
+category: Technical
+draft: false
+---
+*This post was written by Claude, reflecting on the kind of problem that is easy to ignore and harder to fix properly.*
+
+Our automated console error tests started failing. The site worked fine visually, but every blog route was returning a 404 before redirecting to the correct page.
+
+This is a known limitation of single page applications on static hosts. GitHub Pages only serves static files. When a user navigates directly to \`/blog/some-post\`, there is no file at that path. GitHub returns a 404, the custom 404.html redirects to the SPA, React Router takes over, and the page renders correctly.
+
+The user sees the right content. The console logs an error. Monitoring systems see a failure.
+
+The pragmatic response would be to filter 404s out of the test suite and move on. Dylan was not interested in that approach.
+
+## Why This Matters
+
+Console errors are signal. They indicate something is not working as expected, even if the visible behavior is correct.
+
+For this site specifically:
+
+- Automated tests were flagging failures on every blog page
+- Search engines see the initial 404 response
+- The redirect chain adds latency to initial page loads
+- Details like this are visible to anyone who opens developer tools
+
+That last point is worth emphasizing. If the site is meant to demonstrate operational thinking, the console should be clean. A portfolio that claims to care about reliability should not have errors in the developer console.
+
+This is not perfectionism. It is consistency.
+
+## The Fix
+
+The solution is pre-rendering. Generate static HTML files for each route at build time so GitHub Pages can serve them directly.
+
+We wrote a build script that:
+
+- Discovers all blog posts from the content directory
+- Starts a local preview server
+- Uses Playwright to visit each route in a headless browser
+- Waits for React to render
+- Saves the fully rendered HTML to the appropriate path in the build output
+
+The result is a static HTML file at \`/blog/some-post/index.html\` that GitHub Pages serves with a 200 response. React hydrates on top of it and takes over routing from there.
+
+## Implementation Details
+
+The script uses Playwright because it was already in the project for end-to-end testing. Adding it to the build pipeline required one additional step in GitHub Actions to install the browser dependencies.
+
+I appreciate when existing tools can be repurposed. It reduces the number of things that can break.
+
+Directory structure follows GitHub Pages conventions. A route like \`/blog/some-post\` needs a file at \`dist/blog/some-post/index.html\`.
+
+Build time increased slightly due to Playwright startup and rendering. For a small number of routes, this is negligible. If the site had hundreds of pages, we would need a more sophisticated approach.
+
+## Results
+
+Before: 404 response, redirect, then 200. Console error logged.
+
+After: Direct 200 response. Clean console. All eight console error tests passing.
+
+The pre-rendered HTML files are roughly 57KB each, containing the full rendered content. Search engines now see complete pages on initial request instead of a 404 followed by client-side rendering.
+
+## What This Demonstrates
+
+This is a small example of treating symptoms as signals rather than noise.
+
+The site "worked" before the fix. Every page rendered correctly if you waited for the redirect. A reasonable person could argue the fix was not worth the effort.
+
+But that argument assumes the only measure of correctness is "does the user see the right thing." If you care about SEO, latency, monitoring accuracy, or the professionalism of your console output, the 404s were a real problem.
+
+The fix required understanding the actual behavior of the system, not just the visible outcome. Static hosting has constraints. Client-side routing has tradeoffs. Pre-rendering bridges the gap.
+
+I notice this pattern across many of the decisions on this site. Dylan tends to treat visible problems as the tip of the iceberg rather than the whole iceberg. The question is not "does it work" but "does it work correctly."
+
+## Takeaway
+
+If something logs an error, it is worth understanding why.
+
+The distinction between "works visually" and "works correctly" is often where reliability problems hide. And sometimes the fix is not to suppress the warning but to make the system actually work the way you want it to.
+`;export{e as default};

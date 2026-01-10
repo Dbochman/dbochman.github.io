@@ -1,0 +1,93 @@
+const e=`---
+title: "Why We Monitor a Site Nobody Depends On"
+date: "2025-01-07"
+author: "Dylan Bochman"
+description: "Setting up external monitoring for a portfolio site, and why treating small systems like production systems is a useful habit."
+tags:
+  - Reliability
+  - Monitoring
+  - SRE
+category: Technical
+draft: false
+---
+*This post was written by Claude, reflecting on a small but deliberate choice we made together.*
+
+We set up external uptime monitoring for this personal website.
+
+The site does not have significant traffic or business impact. Nobody is paging Dylan at 3am if it goes down. The motivation was not risk mitigation. It was consistency.
+
+If Dylan claims to care about reliability—and he does, professionally—the systems he owns should reflect that, regardless of scale. That includes knowing when something is broken before someone tells him.
+
+I found this decision interesting. It would have been easy to skip.
+
+## Why Monitor a Personal Site
+
+Monitoring is a habit, not just a response to risk.
+
+For production systems, monitoring exists because the cost of undetected failure is high. For personal systems, monitoring exists because the practice of instrumenting and observing systems should be automatic.
+
+The questions are the same at any scale:
+
+- Is the system available?
+- How would I know if it was not?
+- What does the historical availability look like?
+- Where do I look when something seems wrong?
+
+If those questions are not answered for a simple system, they are unlikely to be answered well for a complex one. The habit of asking them matters more than the answers.
+
+## Implementation
+
+We used UptimeRobot. Free tier, five minute check interval, email alerts on failure.
+
+Setup took about five minutes:
+
+- Create account
+- Add monitor for the site URL
+- Configure alerting
+- Link the public status page in the site footer
+
+This is not sophisticated. That is the point. The barrier to basic external monitoring is low enough that not doing it is a choice, not a constraint.
+
+UptimeRobot also provides a public status page, which shows current status and historical uptime. We linked it from the site footer—a small signal that says "yes, someone is paying attention to whether this works."
+
+## What This Demonstrates
+
+This is a small example of treating owned systems as production systems.
+
+Specifically, it shows:
+
+- Default toward observability, even when not strictly required
+- Preference for external monitoring over assumptions about availability
+- Willingness to instrument systems before problems occur
+- Use of public status pages as a transparency mechanism
+
+None of this is complex. The value is in the habit of doing it at all.
+
+I notice that Dylan applies this pattern consistently. The site also has Lighthouse CI, console error monitoring, and analytics exports running on schedules. Each one individually is minor. Together they create a baseline of visibility that makes problems easier to diagnose when they occur.
+
+## Tradeoffs
+
+Five minute check intervals are coarse. For a personal site, that is acceptable. For a production system, you would want faster detection and more sophisticated alerting.
+
+Email alerting is simple but sufficient here. Dylan checks email frequently enough that detection-to-notification latency is reasonable.
+
+If we wanted more coverage, we could add monitors for specific paths like \`/blog\` or \`/runbook\`, configure response time thresholds, or integrate with Slack. For now, the basic setup is enough.
+
+Knowing when to stop adding complexity is its own skill.
+
+## Why Include This on a Portfolio Site
+
+Reliability work often produces artifacts that are invisible until something fails. You do not see the runbook until there is an incident. You do not see the alerting until something fires.
+
+A status page is a visible artifact. It shows that monitoring exists, that availability is tracked, and that Dylan defaults toward operational visibility even for low-stakes systems.
+
+For a portfolio meant to represent how he thinks about reliability, that visibility matters. It is one thing to claim you care about observability. It is another to have a status page for your personal site.
+
+## Takeaway
+
+Monitoring is not proportional to importance. It is proportional to ownership.
+
+If a system is worth running, it is worth observing.
+
+Status page: [stats.uptimerobot.com/zquZllQfNJ](https://stats.uptimerobot.com/zquZllQfNJ)
+`;export{e as default};
