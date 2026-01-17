@@ -1,0 +1,71 @@
+{
+  "generated": "2026-01-17T06:15:08.149Z",
+  "searchConsole": {
+    "lastCheck": "2026-01-12T11:03:07.421Z",
+    "clicks": 0,
+    "impressions": 1,
+    "averageCTR": 0,
+    "averagePosition": 1
+  },
+  "analytics": {
+    "lastCheck": "2026-01-17T06:15:08.149Z",
+    "sessions_7d": 8972,
+    "users_7d": 8674,
+    "pageviews_7d": 9814,
+    "avgSessionDuration": 29,
+    "bounceRate": 0.92,
+    "topPages": [
+      {
+        "page": "/",
+        "pageViews": 3101
+      },
+      {
+        "page": "/blog/",
+        "pageViews": 1407
+      },
+      {
+        "page": "/runbook",
+        "pageViews": 1128
+      },
+      {
+        "page": "/blog",
+        "pageViews": 616
+      },
+      {
+        "page": "/this-page-does-not-exist",
+        "pageViews": 375
+      }
+    ]
+  },
+  "webVitals": {
+    "lastCheck": "2026-01-17T06:15:08.149Z",
+    "source": "rum",
+    "metrics": {
+      "FCP": {
+        "count": 1749,
+        "average": 520.1509433962265,
+        "unit": "ms"
+      },
+      "TTFB": {
+        "count": 1652,
+        "average": 115.13438256658596,
+        "unit": "ms"
+      },
+      "LCP": {
+        "count": 793,
+        "average": 325.22698612862547,
+        "unit": "ms"
+      },
+      "CLS": {
+        "count": 426,
+        "average": 0.007126760563380282,
+        "unit": ""
+      },
+      "INP": {
+        "count": 225,
+        "average": 40.39111111111111,
+        "unit": "ms"
+      }
+    }
+  }
+}

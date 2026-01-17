@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* Disable transitions on page load to prevent flash */
+      .preload * {
+        transition: none !important;
+      }
+    </style>
+    <script>
+      // GitHub Pages SPA redirect handler
+      // This must run before any other scripts to handle redirects from 404.html
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+    <script>
+      // Apply theme IMMEDIATELY to prevent flash - must be first script in head
+      (function() {
+        // Disable transitions during initial load
+        document.documentElement.classList.add('preload');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const themeParam = urlParams.get('theme');
+        const isDark = themeParam ? themeParam === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+        }
+
+        // Re-enable transitions after a short delay (prevents flash but enables smooth transitions)
+        setTimeout(() => {
+          document.documentElement.classList.remove('preload');
+        }, 100);
+      })();
+    </script>
+    <title>Dylan Bochman - Technical Incident Manager</title>
+    <link rel="canonical" href="https://dylanbochman.com" />
+    <link rel="icon" id="favicon" href="/favicon-light.ico" />
+    <link rel="icon" id="favicon-16" type="image/png" sizes="16x16" href="/favicon-16x16-light.png" />
+    <link rel="icon" id="favicon-32" type="image/png" sizes="32x32" href="/favicon-32x32-light.png" />
+    <link rel="apple-touch-icon" id="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-light.png" />
+    <meta property="og:url" content="https://dylanbochman.com" />
+    <meta name="description" content="Technical Incident Manager and Former SRE / PM specializing in Reliability and Incident Management. Experience at Groq, HashiCorp and Spotify." />
+    <meta name="keywords" content="Site Reliability Engineering, SRE, Technical Incident Manager, Incident Management, Groq, HashiCorp, Spotify, Post-Incident Analysis, SLO Monitoring, Operational Readiness, Infrastructure Reliability, DevOps, System Reliability, Incident Response, Dylan Bochman" />
+    <meta name="author" content="Dylan Bochman" />
+
+    <meta property="og:title" content="Dylan Bochman - Technical Incident Manager" />
+    <meta property="og:description" content="Technical Incident Manager and Former SRE / PM specializing in Reliability and Incident Management. Experience at Groq, HashiCorp and Spotify." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://dylanbochman.com/social-preview.webp" />
+
+    <meta name="theme-color" content="#000000" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@dylanbochman" />
+    <meta name="twitter:image" content="https://dylanbochman.com/social-preview.webp" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="Dylan Bochman's Blog" href="https://dylanbochman.com/rss.xml" />
+
+    <!-- DNS prefetch and preconnect for external resources -->
+    <link rel="dns-prefetch" href="https://giscus.app" />
+    <link rel="preconnect" href="https://giscus.app" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+
+    <!-- Using system fonts (San Francisco, Segoe UI, Roboto) - zero web font requests for instant rendering -->
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Dylan Bochman",
+      "url": "https://dylanbochman.com",
+      "jobTitle": "Technical Incident Manager",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Groq"
+      },
+      "alumniOf": [
+        {
+          "@type": "Organization",
+          "name": "HashiCorp"
+        },
+        {
+          "@type": "Organization",
+          "name": "Spotify"
+        }
+      ],
+      "knowsAbout": [
+        "Site Reliability Engineering",
+        "Incident Management",
+        "DevOps",
+        "System Reliability",
+        "Post-Incident Analysis",
+        "SLO Monitoring"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/dylanbochman"
+      ]
+    }
+    </script>
+
+    <script>
+      if (location.hostname === "dbochman.github.io") {
+      location.href = location.href.replace("dbochman.github.io", "dylanbochman.com");
+      }
+    </script>
+
+    <script>
+      // Update favicons based on theme
+      function updateFavicons(isDark) {
+        const theme = isDark ? 'dark' : 'light';
+        document.getElementById('favicon').href = `/favicon-${theme}.ico`;
+        document.getElementById('favicon-16').href = `/favicon-16x16-${theme}.png`;
+        document.getElementById('favicon-32').href = `/favicon-32x32-${theme}.png`;
+        document.getElementById('apple-touch-icon').href = `/apple-touch-icon-${theme}.png`;
+      }
+
+      // Initialize favicon and theme based on URL parameter or system preference
+      (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const themeParam = urlParams.get('theme');
+        let isDark;
+
+        if (themeParam) {
+          isDark = themeParam === 'dark';
+        } else {
+          isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+
+        // Apply theme class immediately to prevent flash
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+
+        updateFavicons(isDark);
+
+        // Listen for theme changes from the React app
+        window.addEventListener('themeChange', (e) => {
+          updateFavicons(e.detail.isDark);
+        });
+
+        // Also listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!urlParams.get('theme')) {
+            updateFavicons(e.matches);
+          }
+        });
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-MSZzgcHF.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/monitoring-CUm8urQR.js">
+    <link rel="modulepreload" crossorigin href="/assets/ui-BQCqNqg0.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-BfM2sgLl.js">
+    <link rel="modulepreload" crossorigin href="/assets/theme-BX1NwBNL.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BLzk33I9.css">
+  </head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VDM15EMJN2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VDM15EMJN2', {
+    anonymize_ip: true,
+    cookie_expires: 63072000, // 2 years
+    sample_rate: 100
+  });
+</script>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
