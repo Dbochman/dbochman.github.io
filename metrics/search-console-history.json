@@ -1,0 +1,320 @@
+[
+  {
+    "timestamp": "2026-01-06T15:56:13.379Z",
+    "date": "2026-01-06",
+    "period": {
+      "start": "2025-12-30",
+      "end": "2026-01-06"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-12T11:03:07.420Z",
+    "date": "2026-01-12",
+    "period": {
+      "start": "2026-01-05",
+      "end": "2026-01-12"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 1,
+      "averageCTR": 0,
+      "averagePosition": 1
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/",
+        "clicks": 0,
+        "impressions": 1
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-15T06:15:50.207Z",
+    "date": "2026-01-15",
+    "period": {
+      "start": "2026-01-08",
+      "end": "2026-01-15"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-16T06:15:59.853Z",
+    "date": "2026-01-16",
+    "period": {
+      "start": "2026-01-09",
+      "end": "2026-01-16"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-17T06:14:14.409Z",
+    "date": "2026-01-17",
+    "period": {
+      "start": "2026-01-10",
+      "end": "2026-01-17"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-18T06:14:54.681Z",
+    "date": "2026-01-18",
+    "period": {
+      "start": "2026-01-11",
+      "end": "2026-01-18"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-19T06:18:42.803Z",
+    "date": "2026-01-19",
+    "period": {
+      "start": "2026-01-12",
+      "end": "2026-01-19"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-20T06:17:02.221Z",
+    "date": "2026-01-20",
+    "period": {
+      "start": "2026-01-13",
+      "end": "2026-01-20"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-21T06:17:12.248Z",
+    "date": "2026-01-21",
+    "period": {
+      "start": "2026-01-14",
+      "end": "2026-01-21"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-22T02:32:00.318Z",
+    "date": "2026-01-22",
+    "period": {
+      "start": "2026-01-15",
+      "end": "2026-01-22"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-22T06:14:02.123Z",
+    "date": "2026-01-22",
+    "period": {
+      "start": "2026-01-15",
+      "end": "2026-01-22"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-23T06:13:31.026Z",
+    "date": "2026-01-23",
+    "period": {
+      "start": "2026-01-16",
+      "end": "2026-01-23"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 2,
+      "averageCTR": 0,
+      "averagePosition": 6
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 2
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-24T06:12:21.976Z",
+    "date": "2026-01-24",
+    "period": {
+      "start": "2026-01-17",
+      "end": "2026-01-24"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 7,
+      "averageCTR": 0,
+      "averagePosition": 6.1
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 7
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-25T06:12:43.168Z",
+    "date": "2026-01-25",
+    "period": {
+      "start": "2026-01-18",
+      "end": "2026-01-25"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 18,
+      "averageCTR": 0,
+      "averagePosition": 5.6
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 18
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-25T16:33:25.387Z",
+    "date": "2026-01-25",
+    "period": {
+      "start": "2026-01-18",
+      "end": "2026-01-25"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 29,
+      "averageCTR": 0,
+      "averagePosition": 5.5
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 29
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-26T06:15:57.171Z",
+    "date": "2026-01-26",
+    "period": {
+      "start": "2026-01-19",
+      "end": "2026-01-26"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 78,
+      "averageCTR": 0,
+      "averagePosition": 5.7
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 78
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-27T06:05:46.985Z",
+    "date": "2026-01-27",
+    "period": {
+      "start": "2026-01-20",
+      "end": "2026-01-27"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 93,
+      "averageCTR": 0,
+      "averagePosition": 5.7
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 93
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-28T06:05:56.133Z",
+    "date": "2026-01-28",
+    "period": {
+      "start": "2026-01-21",
+      "end": "2026-01-28"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 134,
+      "averageCTR": 0,
+      "averagePosition": 5.6
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 134
+      }
+    ]
+  }
+]
