@@ -1,0 +1,527 @@
+<!DOCTYPE html><html lang="en" class=""><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      /* Disable transitions on page load to prevent flash */
+      .preload * {
+        transition: none !important;
+      }
+    </style>
+    <script>
+      // GitHub Pages SPA redirect handler
+      // This must run before any other scripts to handle redirects from 404.html
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+    <script>
+      // Apply theme IMMEDIATELY to prevent flash - must be first script in head
+      (function() {
+        // Disable transitions during initial load
+        document.documentElement.classList.add('preload');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const themeParam = urlParams.get('theme');
+        const isDark = themeParam ? themeParam === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+        }
+
+        // Re-enable transitions after a short delay (prevents flash but enables smooth transitions)
+        setTimeout(() => {
+          document.documentElement.classList.remove('preload');
+        }, 100);
+      })();
+    </script>
+    <title>Retrospectives That Actually Change Things - Dylan Bochman</title>
+    <link rel="canonical" href="https://dylanbochman.com">
+    <link rel="icon" id="favicon" href="/favicon-light.ico">
+    <link rel="icon" id="favicon-16" type="image/png" sizes="16x16" href="/favicon-16x16-light.png">
+    <link rel="icon" id="favicon-32" type="image/png" sizes="32x32" href="/favicon-32x32-light.png">
+    <link rel="apple-touch-icon" id="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-light.png">
+    <meta property="og:url" content="https://dylanbochman.com">
+    <meta name="description" content="Site Reliability Engineer (SRE) and Technical Incident Manager specializing in reliability, incident management, and SLO monitoring. Experience at Groq, HashiCorp, and Spotify.">
+    <meta name="keywords" content="Site Reliability Engineering, SRE, Technical Incident Manager, Incident Management, Groq, HashiCorp, Spotify, Post-Incident Analysis, SLO Monitoring, Operational Readiness, Infrastructure Reliability, DevOps, System Reliability, Incident Response, Dylan Bochman">
+    <meta name="author" content="Dylan Bochman">
+
+    <meta property="og:title" content="Dylan Bochman - Site Reliability Engineer &amp; Incident Manager">
+    <meta property="og:description" content="Site Reliability Engineer (SRE) and Technical Incident Manager specializing in reliability, incident management, and SLO monitoring. Experience at Groq, HashiCorp, and Spotify.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://dylanbochman.com/social-preview.webp">
+
+    <meta name="theme-color" content="#000000">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://dylanbochman.com/social-preview.webp">
+    <meta name="robots" content="index, follow">
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="Dylan Bochman's Blog" href="https://dylanbochman.com/rss.xml">
+
+    <!-- DNS prefetch and preconnect for external resources -->
+    <link rel="dns-prefetch" href="https://giscus.app">
+    <link rel="preconnect" href="https://giscus.app" crossorigin="">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+
+    <!-- Using system fonts (San Francisco, Segoe UI, Roboto) - zero web font requests for instant rendering -->
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "dateCreated": "2026-01-04",
+      "dateModified": "2026-01-28",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Dylan Bochman",
+        "givenName": "Dylan",
+        "familyName": "Bochman",
+        "alternateName": ["Dbochman"],
+        "identifier": "dylanbochman",
+        "url": "https://dylanbochman.com",
+        "image": "https://dylanbochman.com/social-preview.webp",
+        "description": "Site Reliability Engineer and Technical Incident Manager specializing in reliability, incident management, and SLO monitoring. Currently at Groq, previously at HashiCorp and Spotify.",
+        "jobTitle": "Site Reliability Engineer & Technical Incident Manager",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Groq",
+          "url": "https://groq.com"
+        },
+        "alumniOf": [
+          {
+            "@type": "Organization",
+            "name": "HashiCorp",
+            "url": "https://hashicorp.com"
+          },
+          {
+            "@type": "Organization",
+            "name": "Spotify",
+            "url": "https://spotify.com"
+          }
+        ],
+        "knowsAbout": [
+          "Site Reliability Engineering",
+          "Incident Management",
+          "DevOps",
+          "System Reliability",
+          "Post-Incident Analysis",
+          "SLO Monitoring",
+          "Infrastructure Reliability",
+          "Operational Readiness",
+          "Service Level Objectives",
+          "On-Call Management"
+        ],
+        "hasOccupation": {
+          "@type": "Occupation",
+          "name": "Site Reliability Engineer",
+          "occupationLocation": {
+            "@type": "Country",
+            "name": "United States"
+          },
+          "skills": "SRE, Incident Management, SLO Monitoring, Infrastructure Reliability, DevOps"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/dbochman",
+          "https://github.com/Dbochman"
+        ]
+      }
+    }
+    </script>
+
+    <script>
+      if (location.hostname === "dbochman.github.io") {
+      location.href = location.href.replace("dbochman.github.io", "dylanbochman.com");
+      }
+    </script>
+
+    <script>
+      // Update favicons based on theme
+      function updateFavicons(isDark) {
+        const theme = isDark ? 'dark' : 'light';
+        document.getElementById('favicon').href = `/favicon-${theme}.ico`;
+        document.getElementById('favicon-16').href = `/favicon-16x16-${theme}.png`;
+        document.getElementById('favicon-32').href = `/favicon-32x32-${theme}.png`;
+        document.getElementById('apple-touch-icon').href = `/apple-touch-icon-${theme}.png`;
+      }
+
+      // Initialize favicon and theme based on URL parameter or system preference
+      (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const themeParam = urlParams.get('theme');
+        let isDark;
+
+        if (themeParam) {
+          isDark = themeParam === 'dark';
+        } else {
+          isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+
+        // Apply theme class immediately to prevent flash
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+
+        updateFavicons(isDark);
+
+        // Listen for theme changes from the React app
+        window.addEventListener('themeChange', (e) => {
+          updateFavicons(e.detail.isDark);
+        });
+
+        // Also listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!urlParams.get('theme')) {
+            updateFavicons(e.matches);
+          }
+        });
+      })();
+    </script>
+    <script type="module" crossorigin="" src="/assets/index-Bi-685lt.js"></script>
+    <link rel="modulepreload" crossorigin="" href="/assets/monitoring-SVb-Wmei.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/ui-BQCqNqg0.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-DYRo3UGY.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/theme-BsfYbIR4.js">
+    <link rel="stylesheet" crossorigin="" href="/assets/index-BHFAhK3D.css">
+  <script>
+  (function() {
+    // Bot user agent patterns
+    var botPatterns = [
+      /googlebot/i, /bingbot/i, /slurp/i, /duckduckbot/i, /baiduspider/i,
+      /yandexbot/i, /facebot/i, /facebookexternalhit/i, /twitterbot/i,
+      /linkedinbot/i, /pinterest/i, /slackbot/i, /telegrambot/i, /whatsapp/i,
+      /discordbot/i, /bot\b/i, /crawler/i, /spider/i, /scraper/i, /fetcher/i,
+      /uptimerobot/i, /pingdom/i, /newrelic/i, /datadog/i, /statuscake/i,
+      /ahrefsbot/i, /semrushbot/i, /mj12bot/i, /dotbot/i, /petalbot/i,
+      /gptbot/i, /chatgpt/i, /claudebot/i, /anthropic/i, /ccbot/i, /perplexitybot/i
+    ];
+    // CI/automation patterns (specific headless indicators, not generic browsers)
+    var ciPatterns = [
+      /HeadlessChrome/i, /playwright/i, /puppeteer/i, /selenium/i,
+      /webdriver/i, /phantomjs/i, /cypress/i, /nightwatch/i, /github-actions/i
+    ];
+    // Probe paths
+    var probePatterns = [
+      /wp-admin/i, /wp-login/i, /\.env/i, /\.git/i, /\.php$/i, /phpmyadmin/i,
+      /xmlrpc\.php/i, /\.sql/i, /\.bak/i, /cgi-bin/i, /\.asp/i
+    ];
+
+    var ua = navigator.userAgent || '';
+    var path = location.pathname || '/';
+    var type = 'human';
+
+    // Check CI first (more specific)
+    for (var i = 0; i < ciPatterns.length; i++) {
+      if (ciPatterns[i].test(ua)) { type = 'ci'; break; }
+    }
+    // Check bots
+    if (type === 'human') {
+      for (var j = 0; j < botPatterns.length; j++) {
+        if (botPatterns[j].test(ua)) { type = 'bot'; break; }
+      }
+    }
+    // Check probe paths
+    if (type === 'human') {
+      for (var k = 0; k < probePatterns.length; k++) {
+        if (probePatterns[k].test(path)) { type = 'bot'; break; }
+      }
+    }
+
+    // Cache in sessionStorage for SPA consistency
+    try { sessionStorage.setItem('traffic_type', type); } catch(e) {}
+
+    // Expose for gtag config
+    window.__trafficType = type;
+  })();
+</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VDM15EMJN2"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  // Set traffic_type BEFORE config (so first page_view includes it)
+  gtag('set', { traffic_type: window.__trafficType || 'human' });
+
+  gtag('config', 'G-VDM15EMJN2', {
+    anonymize_ip: true,
+    cookie_expires: 63072000, // 2 years
+    sample_rate: 100
+  });
+</script><style type="text/css">[data-sonner-toaster][dir=ltr],html[dir=ltr]{--toast-icon-margin-start:-3px;--toast-icon-margin-end:4px;--toast-svg-margin-start:-1px;--toast-svg-margin-end:0px;--toast-button-margin-start:auto;--toast-button-margin-end:0;--toast-close-button-start:0;--toast-close-button-end:unset;--toast-close-button-transform:translate(-35%, -35%)}[data-sonner-toaster][dir=rtl],html[dir=rtl]{--toast-icon-margin-start:4px;--toast-icon-margin-end:-3px;--toast-svg-margin-start:0px;--toast-svg-margin-end:-1px;--toast-button-margin-start:0;--toast-button-margin-end:auto;--toast-close-button-start:unset;--toast-close-button-end:0;--toast-close-button-transform:translate(35%, -35%)}[data-sonner-toaster]{position:fixed;width:var(--width);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;--gray1:hsl(0, 0%, 99%);--gray2:hsl(0, 0%, 97.3%);--gray3:hsl(0, 0%, 95.1%);--gray4:hsl(0, 0%, 93%);--gray5:hsl(0, 0%, 90.9%);--gray6:hsl(0, 0%, 88.7%);--gray7:hsl(0, 0%, 85.8%);--gray8:hsl(0, 0%, 78%);--gray9:hsl(0, 0%, 56.1%);--gray10:hsl(0, 0%, 52.3%);--gray11:hsl(0, 0%, 43.5%);--gray12:hsl(0, 0%, 9%);--border-radius:8px;box-sizing:border-box;padding:0;margin:0;list-style:none;outline:0;z-index:999999999;transition:transform .4s ease}@media (hover:none) and (pointer:coarse){[data-sonner-toaster][data-lifted=true]{transform:none}}[data-sonner-toaster][data-x-position=right]{right:var(--offset-right)}[data-sonner-toaster][data-x-position=left]{left:var(--offset-left)}[data-sonner-toaster][data-x-position=center]{left:50%;transform:translateX(-50%)}[data-sonner-toaster][data-y-position=top]{top:var(--offset-top)}[data-sonner-toaster][data-y-position=bottom]{bottom:var(--offset-bottom)}[data-sonner-toast]{--y:translateY(100%);--lift-amount:calc(var(--lift) * var(--gap));z-index:var(--z-index);position:absolute;opacity:0;transform:var(--y);touch-action:none;transition:transform .4s,opacity .4s,height .4s,box-shadow .2s;box-sizing:border-box;outline:0;overflow-wrap:anywhere}[data-sonner-toast][data-styled=true]{padding:16px;background:var(--normal-bg);border:1px solid var(--normal-border);color:var(--normal-text);border-radius:var(--border-radius);box-shadow:0 4px 12px rgba(0,0,0,.1);width:var(--width);font-size:13px;display:flex;align-items:center;gap:6px}[data-sonner-toast]:focus-visible{box-shadow:0 4px 12px rgba(0,0,0,.1),0 0 0 2px rgba(0,0,0,.2)}[data-sonner-toast][data-y-position=top]{top:0;--y:translateY(-100%);--lift:1;--lift-amount:calc(1 * var(--gap))}[data-sonner-toast][data-y-position=bottom]{bottom:0;--y:translateY(100%);--lift:-1;--lift-amount:calc(var(--lift) * var(--gap))}[data-sonner-toast][data-styled=true] [data-description]{font-weight:400;line-height:1.4;color:#3f3f3f}[data-rich-colors=true][data-sonner-toast][data-styled=true] [data-description]{color:inherit}[data-sonner-toaster][data-sonner-theme=dark] [data-description]{color:#e8e8e8}[data-sonner-toast][data-styled=true] [data-title]{font-weight:500;line-height:1.5;color:inherit}[data-sonner-toast][data-styled=true] [data-icon]{display:flex;height:16px;width:16px;position:relative;justify-content:flex-start;align-items:center;flex-shrink:0;margin-left:var(--toast-icon-margin-start);margin-right:var(--toast-icon-margin-end)}[data-sonner-toast][data-promise=true] [data-icon]>svg{opacity:0;transform:scale(.8);transform-origin:center;animation:sonner-fade-in .3s ease forwards}[data-sonner-toast][data-styled=true] [data-icon]>*{flex-shrink:0}[data-sonner-toast][data-styled=true] [data-icon] svg{margin-left:var(--toast-svg-margin-start);margin-right:var(--toast-svg-margin-end)}[data-sonner-toast][data-styled=true] [data-content]{display:flex;flex-direction:column;gap:2px}[data-sonner-toast][data-styled=true] [data-button]{border-radius:4px;padding-left:8px;padding-right:8px;height:24px;font-size:12px;color:var(--normal-bg);background:var(--normal-text);margin-left:var(--toast-button-margin-start);margin-right:var(--toast-button-margin-end);border:none;font-weight:500;cursor:pointer;outline:0;display:flex;align-items:center;flex-shrink:0;transition:opacity .4s,box-shadow .2s}[data-sonner-toast][data-styled=true] [data-button]:focus-visible{box-shadow:0 0 0 2px rgba(0,0,0,.4)}[data-sonner-toast][data-styled=true] [data-button]:first-of-type{margin-left:var(--toast-button-margin-start);margin-right:var(--toast-button-margin-end)}[data-sonner-toast][data-styled=true] [data-cancel]{color:var(--normal-text);background:rgba(0,0,0,.08)}[data-sonner-toaster][data-sonner-theme=dark] [data-sonner-toast][data-styled=true] [data-cancel]{background:rgba(255,255,255,.3)}[data-sonner-toast][data-styled=true] [data-close-button]{position:absolute;left:var(--toast-close-button-start);right:var(--toast-close-button-end);top:0;height:20px;width:20px;display:flex;justify-content:center;align-items:center;padding:0;color:var(--gray12);background:var(--normal-bg);border:1px solid var(--gray4);transform:var(--toast-close-button-transform);border-radius:50%;cursor:pointer;z-index:1;transition:opacity .1s,background .2s,border-color .2s}[data-sonner-toast][data-styled=true] [data-close-button]:focus-visible{box-shadow:0 4px 12px rgba(0,0,0,.1),0 0 0 2px rgba(0,0,0,.2)}[data-sonner-toast][data-styled=true] [data-disabled=true]{cursor:not-allowed}[data-sonner-toast][data-styled=true]:hover [data-close-button]:hover{background:var(--gray2);border-color:var(--gray5)}[data-sonner-toast][data-swiping=true]::before{content:'';position:absolute;left:-100%;right:-100%;height:100%;z-index:-1}[data-sonner-toast][data-y-position=top][data-swiping=true]::before{bottom:50%;transform:scaleY(3) translateY(50%)}[data-sonner-toast][data-y-position=bottom][data-swiping=true]::before{top:50%;transform:scaleY(3) translateY(-50%)}[data-sonner-toast][data-swiping=false][data-removed=true]::before{content:'';position:absolute;inset:0;transform:scaleY(2)}[data-sonner-toast][data-expanded=true]::after{content:'';position:absolute;left:0;height:calc(var(--gap) + 1px);bottom:100%;width:100%}[data-sonner-toast][data-mounted=true]{--y:translateY(0);opacity:1}[data-sonner-toast][data-expanded=false][data-front=false]{--scale:var(--toasts-before) * 0.05 + 1;--y:translateY(calc(var(--lift-amount) * var(--toasts-before))) scale(calc(-1 * var(--scale)));height:var(--front-toast-height)}[data-sonner-toast]>*{transition:opacity .4s}[data-sonner-toast][data-x-position=right]{right:0}[data-sonner-toast][data-x-position=left]{left:0}[data-sonner-toast][data-expanded=false][data-front=false][data-styled=true]>*{opacity:0}[data-sonner-toast][data-visible=false]{opacity:0;pointer-events:none}[data-sonner-toast][data-mounted=true][data-expanded=true]{--y:translateY(calc(var(--lift) * var(--offset)));height:var(--initial-height)}[data-sonner-toast][data-removed=true][data-front=true][data-swipe-out=false]{--y:translateY(calc(var(--lift) * -100%));opacity:0}[data-sonner-toast][data-removed=true][data-front=false][data-swipe-out=false][data-expanded=true]{--y:translateY(calc(var(--lift) * var(--offset) + var(--lift) * -100%));opacity:0}[data-sonner-toast][data-removed=true][data-front=false][data-swipe-out=false][data-expanded=false]{--y:translateY(40%);opacity:0;transition:transform .5s,opacity .2s}[data-sonner-toast][data-removed=true][data-front=false]::before{height:calc(var(--initial-height) + 20%)}[data-sonner-toast][data-swiping=true]{transform:var(--y) translateY(var(--swipe-amount-y,0)) translateX(var(--swipe-amount-x,0));transition:none}[data-sonner-toast][data-swiped=true]{user-select:none}[data-sonner-toast][data-swipe-out=true][data-y-position=bottom],[data-sonner-toast][data-swipe-out=true][data-y-position=top]{animation-duration:.2s;animation-timing-function:ease-out;animation-fill-mode:forwards}[data-sonner-toast][data-swipe-out=true][data-swipe-direction=left]{animation-name:swipe-out-left}[data-sonner-toast][data-swipe-out=true][data-swipe-direction=right]{animation-name:swipe-out-right}[data-sonner-toast][data-swipe-out=true][data-swipe-direction=up]{animation-name:swipe-out-up}[data-sonner-toast][data-swipe-out=true][data-swipe-direction=down]{animation-name:swipe-out-down}@keyframes swipe-out-left{from{transform:var(--y) translateX(var(--swipe-amount-x));opacity:1}to{transform:var(--y) translateX(calc(var(--swipe-amount-x) - 100%));opacity:0}}@keyframes swipe-out-right{from{transform:var(--y) translateX(var(--swipe-amount-x));opacity:1}to{transform:var(--y) translateX(calc(var(--swipe-amount-x) + 100%));opacity:0}}@keyframes swipe-out-up{from{transform:var(--y) translateY(var(--swipe-amount-y));opacity:1}to{transform:var(--y) translateY(calc(var(--swipe-amount-y) - 100%));opacity:0}}@keyframes swipe-out-down{from{transform:var(--y) translateY(var(--swipe-amount-y));opacity:1}to{transform:var(--y) translateY(calc(var(--swipe-amount-y) + 100%));opacity:0}}@media (max-width:600px){[data-sonner-toaster]{position:fixed;right:var(--mobile-offset-right);left:var(--mobile-offset-left);width:100%}[data-sonner-toaster][dir=rtl]{left:calc(var(--mobile-offset-left) * -1)}[data-sonner-toaster] [data-sonner-toast]{left:0;right:0;width:calc(100% - var(--mobile-offset-left) * 2)}[data-sonner-toaster][data-x-position=left]{left:var(--mobile-offset-left)}[data-sonner-toaster][data-y-position=bottom]{bottom:var(--mobile-offset-bottom)}[data-sonner-toaster][data-y-position=top]{top:var(--mobile-offset-top)}[data-sonner-toaster][data-x-position=center]{left:var(--mobile-offset-left);right:var(--mobile-offset-right);transform:none}}[data-sonner-toaster][data-sonner-theme=light]{--normal-bg:#fff;--normal-border:var(--gray4);--normal-text:var(--gray12);--success-bg:hsl(143, 85%, 96%);--success-border:hsl(145, 92%, 87%);--success-text:hsl(140, 100%, 27%);--info-bg:hsl(208, 100%, 97%);--info-border:hsl(221, 91%, 93%);--info-text:hsl(210, 92%, 45%);--warning-bg:hsl(49, 100%, 97%);--warning-border:hsl(49, 91%, 84%);--warning-text:hsl(31, 92%, 45%);--error-bg:hsl(359, 100%, 97%);--error-border:hsl(359, 100%, 94%);--error-text:hsl(360, 100%, 45%)}[data-sonner-toaster][data-sonner-theme=light] [data-sonner-toast][data-invert=true]{--normal-bg:#000;--normal-border:hsl(0, 0%, 20%);--normal-text:var(--gray1)}[data-sonner-toaster][data-sonner-theme=dark] [data-sonner-toast][data-invert=true]{--normal-bg:#fff;--normal-border:var(--gray3);--normal-text:var(--gray12)}[data-sonner-toaster][data-sonner-theme=dark]{--normal-bg:#000;--normal-bg-hover:hsl(0, 0%, 12%);--normal-border:hsl(0, 0%, 20%);--normal-border-hover:hsl(0, 0%, 25%);--normal-text:var(--gray1);--success-bg:hsl(150, 100%, 6%);--success-border:hsl(147, 100%, 12%);--success-text:hsl(150, 86%, 65%);--info-bg:hsl(215, 100%, 6%);--info-border:hsl(223, 43%, 17%);--info-text:hsl(216, 87%, 65%);--warning-bg:hsl(64, 100%, 6%);--warning-border:hsl(60, 100%, 9%);--warning-text:hsl(46, 87%, 65%);--error-bg:hsl(358, 76%, 10%);--error-border:hsl(357, 89%, 16%);--error-text:hsl(358, 100%, 81%)}[data-sonner-toaster][data-sonner-theme=dark] [data-sonner-toast] [data-close-button]{background:var(--normal-bg);border-color:var(--normal-border);color:var(--normal-text)}[data-sonner-toaster][data-sonner-theme=dark] [data-sonner-toast] [data-close-button]:hover{background:var(--normal-bg-hover);border-color:var(--normal-border-hover)}[data-rich-colors=true][data-sonner-toast][data-type=success]{background:var(--success-bg);border-color:var(--success-border);color:var(--success-text)}[data-rich-colors=true][data-sonner-toast][data-type=success] [data-close-button]{background:var(--success-bg);border-color:var(--success-border);color:var(--success-text)}[data-rich-colors=true][data-sonner-toast][data-type=info]{background:var(--info-bg);border-color:var(--info-border);color:var(--info-text)}[data-rich-colors=true][data-sonner-toast][data-type=info] [data-close-button]{background:var(--info-bg);border-color:var(--info-border);color:var(--info-text)}[data-rich-colors=true][data-sonner-toast][data-type=warning]{background:var(--warning-bg);border-color:var(--warning-border);color:var(--warning-text)}[data-rich-colors=true][data-sonner-toast][data-type=warning] [data-close-button]{background:var(--warning-bg);border-color:var(--warning-border);color:var(--warning-text)}[data-rich-colors=true][data-sonner-toast][data-type=error]{background:var(--error-bg);border-color:var(--error-border);color:var(--error-text)}[data-rich-colors=true][data-sonner-toast][data-type=error] [data-close-button]{background:var(--error-bg);border-color:var(--error-border);color:var(--error-text)}.sonner-loading-wrapper{--size:16px;height:var(--size);width:var(--size);position:absolute;inset:0;z-index:10}.sonner-loading-wrapper[data-visible=false]{transform-origin:center;animation:sonner-fade-out .2s ease forwards}.sonner-spinner{position:relative;top:50%;left:50%;height:var(--size);width:var(--size)}.sonner-loading-bar{animation:sonner-spin 1.2s linear infinite;background:var(--gray11);border-radius:6px;height:8%;left:-10%;position:absolute;top:-3.9%;width:24%}.sonner-loading-bar:first-child{animation-delay:-1.2s;transform:rotate(.0001deg) translate(146%)}.sonner-loading-bar:nth-child(2){animation-delay:-1.1s;transform:rotate(30deg) translate(146%)}.sonner-loading-bar:nth-child(3){animation-delay:-1s;transform:rotate(60deg) translate(146%)}.sonner-loading-bar:nth-child(4){animation-delay:-.9s;transform:rotate(90deg) translate(146%)}.sonner-loading-bar:nth-child(5){animation-delay:-.8s;transform:rotate(120deg) translate(146%)}.sonner-loading-bar:nth-child(6){animation-delay:-.7s;transform:rotate(150deg) translate(146%)}.sonner-loading-bar:nth-child(7){animation-delay:-.6s;transform:rotate(180deg) translate(146%)}.sonner-loading-bar:nth-child(8){animation-delay:-.5s;transform:rotate(210deg) translate(146%)}.sonner-loading-bar:nth-child(9){animation-delay:-.4s;transform:rotate(240deg) translate(146%)}.sonner-loading-bar:nth-child(10){animation-delay:-.3s;transform:rotate(270deg) translate(146%)}.sonner-loading-bar:nth-child(11){animation-delay:-.2s;transform:rotate(300deg) translate(146%)}.sonner-loading-bar:nth-child(12){animation-delay:-.1s;transform:rotate(330deg) translate(146%)}@keyframes sonner-fade-in{0%{opacity:0;transform:scale(.8)}100%{opacity:1;transform:scale(1)}}@keyframes sonner-fade-out{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.8)}}@keyframes sonner-spin{0%{opacity:1}100%{opacity:.15}}@media (prefers-reduced-motion){.sonner-loading-bar,[data-sonner-toast],[data-sonner-toast]>*{transition:none!important;animation:none!important}}.sonner-loader{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transform-origin:center;transition:opacity .2s,transform .2s}.sonner-loader[data-visible=false]{opacity:0;transform:scale(.8) translate(-50%,-50%)}</style><link rel="modulepreload" as="script" crossorigin="" href="/assets/BlogPost-Cke-fqV9.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/index-CDflDoSj.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/CategoricalChart-DhIAuySp.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/string-ByOaOpuu.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/band-CquvqAHh.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/init-Dmth1JHB.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/ordinal-DILIJJjt.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/linear-CvkzAKhw.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/defaultLocale-DX6XiGOO.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/time-CTx8_No9.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/BarChart-whS8YsC-.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/tooltipContext-yciYJ0c6.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/ActiveShapeUtils-DRDNHOKy.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/Symbols-BwyIaTTG.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/math-DU1-uaYd.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/ErrorBarContext-BIZn-c9_.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/CartesianChart-MGEN8sQ2.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/graphicalItemSelectors-BWVDw5xS.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/Legend-DxMsuCnE.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/LineChart-C3I7AkEp.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/getRadiusAndStrokeWidthFromDot-CmoMciO4.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/PieChart-C1mMTstn.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/AnimatedMermaidDiagram-B6ta9loL.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/mermaid.core-B_AU-C2d.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/index-Bi-685lt.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/flowDiagram-NV44I4VS-y0P6D_V-.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/chunk-FMBD7UC4-C91StZWn.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/chunk-55IACEB6-BfgYRXNa.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/chunk-QN33PNHL-CPJF4Krn.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/channel-D2Ia4xPF.js"><link rel="canonical" href="https://dylanbochman.com/blog/2026-01-24-retrospectives-that-actually-change-things" data-rh="true"><meta name="description" content="Most retrospectives promise progress and deliver paperwork. Here's how to turn incidents into lasting improvement." data-rh="true"><meta name="keywords" content="SRE, Incident Management" data-rh="true"><meta name="author" content="Dylan" data-rh="true"><meta property="og:type" content="article" data-rh="true"><meta property="og:url" content="https://dylanbochman.com/blog/2026-01-24-retrospectives-that-actually-change-things" data-rh="true"><meta property="og:title" content="Retrospectives That Actually Change Things" data-rh="true"><meta property="og:description" content="Most retrospectives promise progress and deliver paperwork. Here's how to turn incidents into lasting improvement." data-rh="true"><meta property="og:image" content="https://dylanbochman.com/social-preview.webp" data-rh="true"><meta property="og:site_name" content="Dylan Bochman" data-rh="true"><meta property="article:published_time" content="2026-01-24" data-rh="true"><meta property="article:author" content="Dylan" data-rh="true"><meta property="article:tag" content="SRE" data-rh="true"><meta property="article:tag" content="Incident Management" data-rh="true"><meta name="twitter:card" content="summary_large_image" data-rh="true"><meta name="twitter:url" content="https://dylanbochman.com/blog/2026-01-24-retrospectives-that-actually-change-things" data-rh="true"><meta name="twitter:title" content="Retrospectives That Actually Change Things" data-rh="true"><meta name="twitter:description" content="Most retrospectives promise progress and deliver paperwork. Here's how to turn incidents into lasting improvement." data-rh="true"><meta name="twitter:image" content="https://dylanbochman.com/social-preview.webp" data-rh="true"><script type="application/ld+json" data-rh="true">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Retrospectives That Actually Change Things","description":"Most retrospectives promise progress and deliver paperwork. Here's how to turn incidents into lasting improvement.","image":"https://dylanbochman.com/social-preview.webp","datePublished":"2026-01-24","dateModified":"2026-01-24","author":{"@type":"Person","name":"Dylan","url":"https://dylanbochman.com","sameAs":["https://www.linkedin.com/in/dbochman","https://github.com/Dbochman"]},"publisher":{"@type":"Person","name":"Dylan Bochman","url":"https://dylanbochman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dylanbochman.com/blog/2026-01-24-retrospectives-that-actually-change-things"},"keywords":"SRE, Incident Management"}</script><script type="application/ld+json" data-rh="true">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://dylanbochman.com"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://dylanbochman.com/blog"},{"@type":"ListItem","position":3,"name":"Retrospectives That Actually Change Things","item":"https://dylanbochman.com/blog/2026-01-24-retrospectives-that-actually-change-things"}]}</script><link rel="modulepreload" as="script" crossorigin="" href="/assets/dagre-6UL2VRFP-Du7nnNsO.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/graph-jL7YjTil.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/_baseUniq-DdY2c7PY.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/layout-Bsv4teYU.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/min-bMDxjqIi.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/clone-CT6uvs5p.js"></head>
+
+<!-- Traffic Classification (must run BEFORE gtag config) -->
+
+
+<!-- Google tag (gtag.js) -->
+
+
+
+  <body>
+    <div id="root"><div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events: none;"><ol tabindex="-1" class="fixed top-0 z-100 flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol></div><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div class="min-h-screen bg-background text-foreground relative"><a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:border focus:border-border focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-ring">Skip to main content</a><div class="absolute inset-0 opacity-10"><div class="absolute inset-0 animate-grid-pulse" style="background-image: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px); background-size: 60px 40px;"></div></div><div class="hidden md:block"><div class="absolute inset-0 pointer-events-none z-0 overflow-hidden"><div class="absolute inset-0 z-2 opacity-20"><div class="absolute top-[8%] right-[10%] w-24 h-24 parallax-element sre-icon" data-speed="0.35" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 80 80" aria-hidden="true" role="presentation" class="opacity-15"><defs><radialGradient id="beacon-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="hsl(var(--foreground) / 0.8)"></stop><stop offset="70%" stop-color="hsl(var(--foreground) / 0.3)"></stop><stop offset="100%" stop-color="hsl(var(--foreground) / 0)"></stop></radialGradient><radialGradient id="core-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="hsl(var(--foreground) / 0.9)"></stop><stop offset="100%" stop-color="hsl(var(--foreground) / 0.6)"></stop></radialGradient></defs><style>
+          @keyframes beacon-breathing {
+            0%, 100% { 
+              transform: scale(1) rotate(0deg); 
+              opacity: 0.8; 
+            }
+            50% { 
+              transform: scale(1.05) rotate(1deg); 
+              opacity: 1; 
+            }
+          }
+          
+          @keyframes ripple-wave {
+            0% { 
+              r: 8; 
+              opacity: 0.8; 
+              stroke-width: 2;
+            }
+            100% { 
+              r: 35; 
+              opacity: 0; 
+              stroke-width: 0.5;
+            }
+          }
+          
+          @keyframes alert-pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+          }
+          
+          .beacon-breathing {
+            animation: beacon-breathing var(--timing-ambient) var(--easing-gentle) infinite;
+            transform-origin: center;
+          }
+          
+          .ripple-wave {
+            animation: ripple-wave calc(var(--timing-ambient) * 0.5) var(--easing-smooth) infinite;
+          }
+          
+          .alert-core {
+            animation: alert-pulse calc(var(--timing-ambient) * 0.75) var(--easing-gentle) infinite;
+          }
+        </style><circle cx="40" cy="40" fill="none" stroke="url(#beacon-glow)" class="ripple-wave motion-safe:ripple-wave" style="animation-delay: 0s;"></circle><circle cx="40" cy="40" fill="none" stroke="url(#beacon-glow)" class="ripple-wave motion-safe:ripple-wave" style="animation-delay: 0.3s;"></circle><circle cx="40" cy="40" fill="none" stroke="url(#beacon-glow)" class="ripple-wave motion-safe:ripple-wave" style="animation-delay: 0.6s;"></circle><circle cx="40" cy="40" r="8" fill="none" stroke="url(#beacon-glow)" stroke-width="2" class="beacon-breathing"></circle><circle cx="40" cy="40" r="4" fill="url(#core-glow)" class="alert-core beacon-breathing"></circle><path d="M40,30 L45,38 L35,38 Z" fill="url(#core-glow)" class="alert-core"></path><circle cx="40" cy="35" r="1" fill="hsl(var(--foreground) / 0.8)" class="alert-core"></circle></svg></div><div class="absolute top-[10%] right-[45%] w-45 h-45 parallax-element sre-icon" data-speed="0.3" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 160 60" aria-hidden="true" role="presentation" class="opacity-15"><style>
+          @keyframes wave-flow {
+            0% { transform: translateX(-20px); }
+            100% { transform: translateX(20px); }
+          }
+          @keyframes metric-bar {
+            0%, 100% { height: 8px; y: 46px; }
+            50% { height: 20px; y: 34px; }
+          }
+          .wave-line {
+            animation: wave-flow 6s ease-in-out infinite;
+          }
+          .metric-bar {
+            animation: metric-bar 4s ease-in-out infinite;
+          }
+        </style><path d="M0,30 Q20,20 40,30 T80,30 T120,30 T160,30" fill="none" stroke="hsl(var(--foreground) / 0.4)" stroke-width="2" class="wave-line motion-safe:animate-pulse"></path><rect x="20" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar"></rect><rect x="30" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 0.5s;"></rect><rect x="40" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 1s;"></rect><rect x="50" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 1.5s;"></rect><rect x="60" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 2s;"></rect><rect x="70" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 2.5s;"></rect><rect x="80" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 3s;"></rect><line x1="0" y1="54" x2="160" y2="54" stroke="hsl(var(--foreground) / 0.3)" stroke-width="1"></line></svg></div></div><div class="absolute inset-0 z-1 opacity-15"><div class="absolute top-[40%] left-[5%] w-24 h-36 parallax-element sre-icon" data-speed="0.25" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 80 120" aria-hidden="true" role="presentation" class="opacity-15"><style>
+          @keyframes status-blink {
+            0%, 60% { opacity: 0.3; }
+            30% { opacity: 1; }
+          }
+          @keyframes fan-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          .status-light {
+            animation: status-blink 3s ease-in-out infinite;
+          }
+          .fan {
+            animation: fan-spin 2s linear infinite;
+            transform-origin: center;
+          }
+        </style><rect x="10" y="20" width="60" height="15" rx="2" fill="none" stroke="hsl(var(--foreground) / 0.4)" stroke-width="1.5"></rect><rect x="10" y="40" width="60" height="15" rx="2" fill="none" stroke="hsl(var(--foreground) / 0.4)" stroke-width="1.5"></rect><rect x="10" y="60" width="60" height="15" rx="2" fill="none" stroke="hsl(var(--foreground) / 0.4)" stroke-width="1.5"></rect><rect x="10" y="80" width="60" height="15" rx="2" fill="none" stroke="hsl(var(--foreground) / 0.4)" stroke-width="1.5"></rect><circle cx="65" cy="27" r="2" fill="hsl(var(--foreground) / 0.6)" class="status-light"></circle><circle cx="65" cy="47" r="2" fill="hsl(var(--foreground) / 0.6)" class="status-light" style="animation-delay: 0.5s;"></circle><circle cx="65" cy="67" r="2" fill="hsl(var(--foreground) / 0.4)" class="status-light" style="animation-delay: 1s;"></circle><circle cx="65" cy="87" r="2" fill="hsl(var(--foreground) / 0.6)" class="status-light" style="animation-delay: 1.5s;"></circle><circle cx="25" cy="27" r="3" fill="none" stroke="hsl(var(--foreground) / 0.3)" stroke-width="1" class="fan motion-safe:animate-spin"></circle><circle cx="45" cy="47" r="3" fill="none" stroke="hsl(var(--foreground) / 0.3)" stroke-width="1" class="fan motion-safe:animate-spin" style="animation-delay: 0.3s;"></circle><rect x="5" y="15" width="70" height="85" rx="3" fill="none" stroke="hsl(var(--foreground) / 0.2)" stroke-width="1"></rect></svg></div><div class="absolute bottom-[30%] left-[8%] w-40 h-24 parallax-element sre-icon" data-speed="0.28" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 160 100" aria-hidden="true" role="presentation" class="opacity-15"><style>
+          @keyframes signal-flow {
+            0% { stroke-dashoffset: 100; }
+            100% { stroke-dashoffset: 0; }
+          }
+          @keyframes node-blink {
+            0%, 50% { opacity: 0.4; }
+            25%, 75% { opacity: 1; }
+          }
+          .signal-line {
+            stroke-dasharray: 8 4;
+            animation: signal-flow 3s linear infinite;
+          }
+          .node {
+            animation: node-blink 2s ease-in-out infinite;
+          }
+        </style><path d="M20,50 L50,50 L50,30 L80,30 L80,50 L110,50 L110,70 L140,70" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" class="signal-line motion-safe:animate-pulse"></path><path d="M20,70 L40,70 L40,50 L70,50 L70,70 L100,70" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" class="signal-line" style="animation-delay: 1s;"></path><circle cx="20" cy="50" r="4" fill="rgba(255,255,255,0.6)" class="node"></circle><circle cx="50" cy="30" r="3" fill="rgba(255,255,255,0.6)" class="node" style="animation-delay: 0.5s;"></circle><circle cx="80" cy="50" r="4" fill="rgba(255,255,255,0.6)" class="node" style="animation-delay: 1s;"></circle><circle cx="110" cy="70" r="3" fill="rgba(255,255,255,0.6)" class="node" style="animation-delay: 1.5s;"></circle><circle cx="140" cy="70" r="4" fill="rgba(255,255,255,0.6)" class="node" style="animation-delay: 2s;"></circle><rect x="48" y="28" width="4" height="4" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"></rect><rect x="78" y="48" width="4" height="4" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"></rect></svg></div></div><div class="absolute inset-0 z-1 opacity-12"><div class="absolute top-[15%] left-[45%] w-40 h-20 parallax-element sre-icon" data-speed="0.32" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 140 80" aria-hidden="true" role="presentation" class="opacity-15"><style>
+          @keyframes data-stream {
+            0% { stroke-dashoffset: 120; }
+            100% { stroke-dashoffset: 0; }
+          }
+          @keyframes packet-move {
+            0% { transform: translateX(-10px); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateX(150px); opacity: 0; }
+          }
+          .data-line {
+            stroke-dasharray: 6 3;
+            animation: data-stream 4s linear infinite;
+          }
+          .data-packet {
+            animation: packet-move 6s linear infinite;
+          }
+        </style><path d="M10,25 Q40,15 70,25 T130,25" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" class="data-line motion-safe:animate-pulse"></path><path d="M10,40 Q40,50 70,40 T130,40" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" class="data-line" style="animation-delay: 2s;"></path><path d="M10,55 Q40,45 70,55 T130,55" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" class="data-line" style="animation-delay: 4s;"></path><rect x="20" y="22" width="8" height="6" rx="1" fill="rgba(255,255,255,0.6)" class="data-packet"></rect><rect x="25" y="37" width="6" height="6" rx="1" fill="rgba(255,255,255,0.5)" class="data-packet" style="animation-delay: 1s;"></rect><rect x="15" y="52" width="10" height="6" rx="1" fill="rgba(255,255,255,0.4)" class="data-packet" style="animation-delay: 3s;"></rect></svg></div><div class="absolute bottom-[15%] left-[40%] w-36 h-18 parallax-element sre-icon" data-speed="0.22" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 140 80" aria-hidden="true" role="presentation" class="opacity-15"><style>
+          @keyframes data-stream {
+            0% { stroke-dashoffset: 120; }
+            100% { stroke-dashoffset: 0; }
+          }
+          @keyframes packet-move {
+            0% { transform: translateX(-10px); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateX(150px); opacity: 0; }
+          }
+          .data-line {
+            stroke-dasharray: 6 3;
+            animation: data-stream 4s linear infinite;
+          }
+          .data-packet {
+            animation: packet-move 6s linear infinite;
+          }
+        </style><path d="M10,25 Q40,15 70,25 T130,25" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" class="data-line motion-safe:animate-pulse"></path><path d="M10,40 Q40,50 70,40 T130,40" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" class="data-line" style="animation-delay: 2s;"></path><path d="M10,55 Q40,45 70,55 T130,55" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" class="data-line" style="animation-delay: 4s;"></path><rect x="20" y="22" width="8" height="6" rx="1" fill="rgba(255,255,255,0.6)" class="data-packet"></rect><rect x="25" y="37" width="6" height="6" rx="1" fill="rgba(255,255,255,0.5)" class="data-packet" style="animation-delay: 1s;"></rect><rect x="15" y="52" width="10" height="6" rx="1" fill="rgba(255,255,255,0.4)" class="data-packet" style="animation-delay: 3s;"></rect></svg></div></div><div class="absolute inset-0 z-0 opacity-08"><div class="absolute top-[55%] left-[65%] w-32 h-32 parallax-element sre-icon" data-speed="0.18" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 120 120" aria-hidden="true" role="presentation" class="opacity-15"><style>
+          @keyframes quantum-shift {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(2px, -2px); }
+            50% { transform: translate(-1px, 2px); }
+            75% { transform: translate(1px, 1px); }
+          }
+          @keyframes node-energy {
+            0%, 100% { opacity: 0.4; fill: rgba(255,255,255,0.4); }
+            50% { opacity: 1; fill: rgba(255,255,255,0.8); }
+          }
+          .quantum-node {
+            animation: node-energy 3s ease-in-out infinite;
+          }
+          .quantum-grid {
+            animation: quantum-shift 8s ease-in-out infinite;
+          }
+        </style><g class="quantum-grid"><path d="M20,20 L100,20 M20,40 L100,40 M20,60 L100,60 M20,80 L100,80 M20,100 L100,100" stroke="rgba(255,255,255,0.2)" stroke-width="1"></path><path d="M20,20 L20,100 M40,20 L40,100 M60,20 L60,100 M80,20 L80,100 M100,20 L100,100" stroke="rgba(255,255,255,0.2)" stroke-width="1"></path><circle cx="20" cy="20" r="2" class="quantum-node motion-safe:animate-pulse"></circle><circle cx="60" cy="40" r="2" class="quantum-node motion-safe:animate-pulse" style="animation-delay: 0.5s;"></circle><circle cx="100" cy="60" r="2" class="quantum-node motion-safe:animate-pulse" style="animation-delay: 1s;"></circle><circle cx="40" cy="80" r="2" class="quantum-node motion-safe:animate-pulse" style="animation-delay: 1.5s;"></circle><circle cx="80" cy="100" r="2" class="quantum-node motion-safe:animate-pulse" style="animation-delay: 2s;"></circle><path d="M20,20 L60,40 L100,60 L40,80 L80,100" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3 2"></path></g></svg></div><div class="absolute bottom-[45%] right-[25%] w-28 h-28 parallax-element sre-icon" data-speed="0.15" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 120 120" aria-hidden="true" role="presentation" class="opacity-15"><style>
+          @keyframes quantum-shift {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(2px, -2px); }
+            50% { transform: translate(-1px, 2px); }
+            75% { transform: translate(1px, 1px); }
+          }
+          @keyframes node-energy {
+            0%, 100% { opacity: 0.4; fill: rgba(255,255,255,0.4); }
+            50% { opacity: 1; fill: rgba(255,255,255,0.8); }
+          }
+          .quantum-node {
+            animation: node-energy 3s ease-in-out infinite;
+          }
+          .quantum-grid {
+            animation: quantum-shift 8s ease-in-out infinite;
+          }
+        </style><g class="quantum-grid"><path d="M20,20 L100,20 M20,40 L100,40 M20,60 L100,60 M20,80 L100,80 M20,100 L100,100" stroke="rgba(255,255,255,0.2)" stroke-width="1"></path><path d="M20,20 L20,100 M40,20 L40,100 M60,20 L60,100 M80,20 L80,100 M100,20 L100,100" stroke="rgba(255,255,255,0.2)" stroke-width="1"></path><circle cx="20" cy="20" r="2" class="quantum-node motion-safe:animate-pulse"></circle><circle cx="60" cy="40" r="2" class="quantum-node motion-safe:animate-pulse" style="animation-delay: 0.5s;"></circle><circle cx="100" cy="60" r="2" class="quantum-node motion-safe:animate-pulse" style="animation-delay: 1s;"></circle><circle cx="40" cy="80" r="2" class="quantum-node motion-safe:animate-pulse" style="animation-delay: 1.5s;"></circle><circle cx="80" cy="100" r="2" class="quantum-node motion-safe:animate-pulse" style="animation-delay: 2s;"></circle><path d="M20,20 L60,40 L100,60 L40,80 L80,100" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3 2"></path></g></svg></div></div><div class="absolute inset-0 z-1 opacity-10"><div class="absolute bottom-[8%] right-[15%] w-28 h-14 parallax-element sre-icon" data-speed="0.2" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 160 60" aria-hidden="true" role="presentation" class="opacity-15"><style>
+          @keyframes wave-flow {
+            0% { transform: translateX(-20px); }
+            100% { transform: translateX(20px); }
+          }
+          @keyframes metric-bar {
+            0%, 100% { height: 8px; y: 46px; }
+            50% { height: 20px; y: 34px; }
+          }
+          .wave-line {
+            animation: wave-flow 6s ease-in-out infinite;
+          }
+          .metric-bar {
+            animation: metric-bar 4s ease-in-out infinite;
+          }
+        </style><path d="M0,30 Q20,20 40,30 T80,30 T120,30 T160,30" fill="none" stroke="hsl(var(--foreground) / 0.4)" stroke-width="2" class="wave-line motion-safe:animate-pulse"></path><rect x="20" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar"></rect><rect x="30" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 0.5s;"></rect><rect x="40" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 1s;"></rect><rect x="50" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 1.5s;"></rect><rect x="60" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 2s;"></rect><rect x="70" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 2.5s;"></rect><rect x="80" y="46" width="4" height="8" fill="hsl(var(--foreground) / 0.5)" class="metric-bar" style="animation-delay: 3s;"></rect><line x1="0" y1="54" x2="160" y2="54" stroke="hsl(var(--foreground) / 0.3)" stroke-width="1"></line></svg></div></div><div class="absolute inset-0 z-1 opacity-8"><div class="absolute top-[60%] left-[25%] w-20 h-20 parallax-element sre-icon" data-speed="0.12" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 120 120" aria-hidden="true" role="presentation" class="opacity-15"><style>
+          @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          @keyframes pulse-scale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+          }
+          .hex-rotate {
+            animation: rotate-slow 20s linear infinite;
+            transform-origin: center;
+          }
+          .hex-pulse {
+            animation: pulse-scale 4s ease-in-out infinite;
+            transform-origin: center;
+          }
+        </style><g class="hex-rotate motion-safe:animate-spin"><polygon points="60,10 100,35 100,85 60,110 20,85 20,35" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"></polygon></g><g class="hex-pulse"><polygon points="60,30 80,45 80,75 60,90 40,75 40,45" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"></polygon></g><circle cx="60" cy="60" r="3" fill="rgba(255,255,255,0.8)" class="motion-safe:animate-pulse"></circle></svg></div><div class="absolute top-[35%] right-[40%] w-16 h-16 parallax-element sre-icon" data-speed="0.16" style="transform: translate3d(0px, 0px, 0px);"><svg width="100%" height="100%" viewBox="0 0 100 100" aria-hidden="true" role="presentation" class="opacity-15"><style>
+          @keyframes ring-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+          }
+          @keyframes ring-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          .ring-outer {
+            animation: ring-rotate 15s linear infinite;
+            transform-origin: center;
+          }
+          .ring-middle {
+            animation: ring-rotate 10s linear infinite reverse;
+            transform-origin: center;
+          }
+          .ring-inner {
+            animation: ring-pulse 3s ease-in-out infinite;
+            transform-origin: center;
+          }
+        </style><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="10 5" class="ring-outer motion-safe:animate-spin"></circle><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="8 4" class="ring-middle motion-safe:animate-spin"></circle><circle cx="50" cy="50" r="15" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" class="ring-inner motion-safe:animate-pulse"></circle><circle cx="50" cy="50" r="3" fill="rgba(255,255,255,0.6)" class="motion-safe:animate-pulse"></circle></svg></div></div></div></div><header class="bg-background/90 backdrop-blur-xs border-b border-foreground/20 sticky top-0 z-20"><div class="container mx-auto px-6 py-4"><div class="flex justify-between items-center"><div class="flex items-center gap-3"><a href="/" class="text-2xl font-bold text-foreground font-mono tracking-tight hover:no-underline" style="view-transition-name: site-title;">Dylan Bochman</a></div><nav class="hidden md:flex gap-6"><a href="/" class="text-foreground/70 hover:text-foreground transition-colors font-mono text-sm hover:underline decoration-2 underline-offset-4">Home</a><a href="/projects" class="text-foreground/70 hover:text-foreground transition-colors font-mono text-sm hover:underline decoration-2 underline-offset-4">Projects</a><a href="/blog" class="text-foreground/70 hover:text-foreground transition-colors font-mono text-sm hover:underline decoration-2 underline-offset-4">Blog</a><button type="button" aria-label="Toggle dark mode" aria-pressed="false" class="cursor-pointer text-foreground/70 hover:text-foreground transition-colors font-mono text-sm hover:underline decoration-2 underline-offset-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-5 h-5" aria-hidden="true" data-testid="icon-moon"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path></svg></button></nav><div class="flex items-center gap-4 md:hidden"><button type="button" aria-label="Toggle dark mode" aria-pressed="false" class="cursor-pointer p-2 text-foreground/70 hover:text-foreground transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-5 h-5" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path></svg></button><div class="md:hidden"><button class="p-2 text-foreground/70 hover:text-foreground transition-colors" aria-label="Open navigation menu" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-6 h-6" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button></div></div></div></div></header><main id="main-content" class="relative z-10"><div class="container mx-auto px-4 py-12"><div class="max-w-3xl mx-auto"><a href="/blog" class="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left w-4 h-4" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>View all posts</a><header class="mb-8"><h1 class="text-4xl md:text-5xl font-bold mb-4" style="view-transition-name: blog-title-2026-01-24-retrospectives-that-actually-change-things;">Retrospectives That Actually Change Things</h1><div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4"><a class="flex items-center gap-2 hover:text-primary transition-colors" href="/blog?author=Dylan" data-discover="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-4 h-4" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span class="hover:underline">Dylan</span></a><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-4 h-4" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg><time datetime="2026-01-24">January 24, 2026</time></div><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-4 h-4" aria-hidden="true"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></svg><span>5 min read</span></div></div><p class="text-xl text-muted-foreground mb-6">Most retrospectives promise progress and deliver paperwork. Here's how to turn incidents into lasting improvement.</p><div class="flex flex-wrap gap-1.5"><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">SRE</div><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Incident Management</div></div></header><article class="prose prose-lg max-w-none"><p class="my-4 text-foreground/80 leading-7">I use the word retrospective instead of postmortem on purpose. "Postmortem" implies the story is over. A retrospective is about what changes next, and that framing matters when you are trying to turn an incident into lasting improvement.</p>
+<p class="my-4 text-foreground/80 leading-7">Most retrospectives promise progress and deliver paperwork. A document gets written, a handful of action items get listed, and everyone returns to the roadmap. Six months later, the same failure mode shows up again because nothing in the system, or the way the team works, actually changed.</p>
+<p class="my-4 text-foreground/80 leading-7">The most common failure mode is simple: action items without ownership. They exist in a doc or a backlog, technically "tracked" but not owned, which means they never compete effectively with feature work. Features come with deadlines and visibility. Retrospective actions come with guilt, and guilt loses every time. Low-priority fixes linger just long enough to make the backlog feel heavy, then disappear in a cleanup when nobody is watching.</p>
+<div class="space-y-4"><div class="grid lg:grid-cols-5 gap-4"><div class="lg:col-span-3 overflow-x-auto animated-mermaid [&amp;_svg_*]:animate-none! rounded-lg bg-muted/30 p-4"><style>
+          /* Override global * transition */
+          .animated-mermaid svg,
+          .animated-mermaid svg * {
+            transition: none !important;
+          }
+
+          .animated-mermaid.animation-active .node-future {
+            opacity: 0.25;
+          }
+
+          .animated-mermaid.animation-active .node-past {
+            opacity: 0.6;
+          }
+
+          .animated-mermaid.animation-active .node-active {
+            opacity: 1;
+          }
+
+          .animated-mermaid.animation-active .node-active rect,
+          .animated-mermaid.animation-active .node-active polygon,
+          .animated-mermaid.animation-active .node-active circle {
+            stroke: hsl(var(--primary));
+            stroke-width: 2px;
+          }
+
+          /* Decision nodes get amber stroke */
+          .animated-mermaid.animation-active .node-decision polygon {
+            stroke: hsl(45 93% 47%);
+          }
+
+          /* Link nodes get blue stroke */
+          .animated-mermaid.animation-active .node-link rect,
+          .animated-mermaid.animation-active .node-link polygon {
+            stroke: hsl(217 91% 60%);
+          }
+        </style><div aria-label="Animated Mermaid diagram"><svg id="mermaid-anim-r6" width="100%" xmlns="http://www.w3.org/2000/svg" class="flowchart" style="max-width: 658.234375px;" viewBox="0 0 658.234375 926.8125" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mermaid-anim-r6{font-family:inherit;font-size:16px;fill:hsl(222.2 84% 4.9%);}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-anim-r6 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-anim-r6 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-anim-r6 .error-icon{fill:hsl(0 0% 100%);}#mermaid-anim-r6 .error-text{fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);}#mermaid-anim-r6 .edge-thickness-normal{stroke-width:1px;}#mermaid-anim-r6 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-anim-r6 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-anim-r6 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-anim-r6 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-anim-r6 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-anim-r6 .marker{fill:hsl(215.4 16.3% 46.9%);stroke:hsl(215.4 16.3% 46.9%);}#mermaid-anim-r6 .marker.cross{stroke:hsl(215.4 16.3% 46.9%);}#mermaid-anim-r6 svg{font-family:inherit;font-size:16px;}#mermaid-anim-r6 p{margin:0;}#mermaid-anim-r6 .label{font-family:inherit;color:hsl(222.2 84% 4.9%);}#mermaid-anim-r6 .cluster-label text{fill:rgb(0, 0, 0);}#mermaid-anim-r6 .cluster-label span{color:rgb(0, 0, 0);}#mermaid-anim-r6 .cluster-label span p{background-color:transparent;}#mermaid-anim-r6 .label text,#mermaid-anim-r6 span{fill:hsl(222.2 84% 4.9%);color:hsl(222.2 84% 4.9%);}#mermaid-anim-r6 .node rect,#mermaid-anim-r6 .node circle,#mermaid-anim-r6 .node ellipse,#mermaid-anim-r6 .node polygon,#mermaid-anim-r6 .node path{fill:hsl(210 40% 96.1%);stroke:hsl(214.3 31.8% 91.4%);stroke-width:1px;}#mermaid-anim-r6 .rough-node .label text,#mermaid-anim-r6 .node .label text,#mermaid-anim-r6 .image-shape .label,#mermaid-anim-r6 .icon-shape .label{text-anchor:middle;}#mermaid-anim-r6 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-anim-r6 .rough-node .label,#mermaid-anim-r6 .node .label,#mermaid-anim-r6 .image-shape .label,#mermaid-anim-r6 .icon-shape .label{text-align:center;}#mermaid-anim-r6 .node.clickable{cursor:pointer;}#mermaid-anim-r6 .root .anchor path{fill:hsl(215.4 16.3% 46.9%)!important;stroke-width:0;stroke:hsl(215.4 16.3% 46.9%);}#mermaid-anim-r6 .arrowheadPath{fill:rgba(255, 255, 255, 0);}#mermaid-anim-r6 .edgePath .path{stroke:hsl(215.4 16.3% 46.9%);stroke-width:2.0px;}#mermaid-anim-r6 .flowchart-link{stroke:hsl(215.4 16.3% 46.9%);fill:none;}#mermaid-anim-r6 .edgeLabel{background-color:hsl(0 0% 100%);text-align:center;}#mermaid-anim-r6 .edgeLabel p{background-color:hsl(0 0% 100%);}#mermaid-anim-r6 .edgeLabel rect{opacity:0.5;background-color:hsl(0 0% 100%);fill:hsl(0 0% 100%);}#mermaid-anim-r6 .labelBkg{background-color:rgba(255, 255, 255, 0.5);}#mermaid-anim-r6 .cluster rect{fill:hsl(0 0% 100%);stroke:hsl(0, 0%, 90%);stroke-width:1px;}#mermaid-anim-r6 .cluster text{fill:rgb(0, 0, 0);}#mermaid-anim-r6 .cluster span{color:rgb(0, 0, 0);}#mermaid-anim-r6 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:inherit;font-size:12px;background:hsl(0 0% 100%);border:1px solid hsl(0, 0%, 90%);border-radius:2px;pointer-events:none;z-index:100;}#mermaid-anim-r6 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:hsl(222.2 84% 4.9%);}#mermaid-anim-r6 rect.text{fill:none;stroke-width:0;}#mermaid-anim-r6 .icon-shape,#mermaid-anim-r6 .image-shape{background-color:hsl(0 0% 100%);text-align:center;}#mermaid-anim-r6 .icon-shape p,#mermaid-anim-r6 .image-shape p{background-color:hsl(0 0% 100%);padding:2px;}#mermaid-anim-r6 .icon-shape rect,#mermaid-anim-r6 .image-shape rect{opacity:0.5;background-color:hsl(0 0% 100%);fill:hsl(0 0% 100%);}#mermaid-anim-r6 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-anim-r6 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-anim-r6 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="mermaid-anim-r6_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-anim-r6_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-anim-r6_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-anim-r6_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-anim-r6_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-anim-r6_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M317.262,62L317.262,66.167C317.262,70.333,317.262,78.667,317.262,86.333C317.262,94,317.262,101,317.262,104.5L317.262,108" id="L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MzE3LjI2MTcxODc1LCJ5Ijo2Mn0seyJ4IjozMTcuMjYxNzE4NzUsInkiOjg3fSx7IngiOjMxNy4yNjE3MTg3NSwieSI6MTEyfV0=" marker-end="url(#mermaid-anim-r6_flowchart-v2-pointEnd)"></path><path d="M263.828,312.567L252.881,327.639C241.934,342.711,220.039,372.856,209.092,393.428C198.145,414,198.145,425,198.145,430.5L198.145,436" id="L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6MjYzLjgyODQyODY0ODE3NiwieSI6MzEyLjU2NjcwOTg5ODE3Nn0seyJ4IjoxOTguMTQ0NTMxMjUsInkiOjQwM30seyJ4IjoxOTguMTQ0NTMxMjUsInkiOjQ0MH1d" marker-end="url(#mermaid-anim-r6_flowchart-v2-pointEnd)"></path><path d="M390.908,292.353L416.364,310.794C441.819,329.236,492.73,366.118,518.185,390.059C543.641,414,543.641,425,543.641,430.5L543.641,436" id="L_B_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_D_0" data-points="W3sieCI6MzkwLjkwODQyNjE3NTY3ODIsInkiOjI5Mi4zNTMyOTI1NzQzMjE4fSx7IngiOjU0My42NDA2MjUsInkiOjQwM30seyJ4Ijo1NDMuNjQwNjI1LCJ5Ijo0NDB9XQ==" marker-end="url(#mermaid-anim-r6_flowchart-v2-pointEnd)"></path><path d="M198.145,494L198.145,498.167C198.145,502.333,198.145,510.667,198.145,518.333C198.145,526,198.145,533,198.145,536.5L198.145,540" id="L_C_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_E_0" data-points="W3sieCI6MTk4LjE0NDUzMTI1LCJ5Ijo0OTR9LHsieCI6MTk4LjE0NDUzMTI1LCJ5Ijo1MTl9LHsieCI6MTk4LjE0NDUzMTI1LCJ5Ijo1NDR9XQ==" marker-end="url(#mermaid-anim-r6_flowchart-v2-pointEnd)"></path><path d="M162.631,651.299L150.673,663.384C138.715,675.47,114.799,699.641,102.841,717.227C90.883,734.813,90.883,745.813,90.883,751.313L90.883,756.813" id="L_E_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_F_0" data-points="W3sieCI6MTYyLjYzMDg3OTY0NTI0NzMyLCJ5Ijo2NTEuMjk4ODQ4Mzk1MjQ3M30seyJ4Ijo5MC44ODI4MTI1LCJ5Ijo3MjMuODEyNX0seyJ4Ijo5MC44ODI4MTI1LCJ5Ijo3NjAuODEyNX1d" marker-end="url(#mermaid-anim-r6_flowchart-v2-pointEnd)"></path><path d="M233.658,651.299L245.616,663.384C257.574,675.47,281.49,699.641,293.448,717.227C305.406,734.813,305.406,745.813,305.406,751.313L305.406,756.813" id="L_E_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_G_0" data-points="W3sieCI6MjMzLjY1ODE4Mjg1NDc1MjY4LCJ5Ijo2NTEuMjk4ODQ4Mzk1MjQ3M30seyJ4IjozMDUuNDA2MjUsInkiOjcyMy44MTI1fSx7IngiOjMwNS40MDYyNSwieSI6NzYwLjgxMjV9XQ==" marker-end="url(#mermaid-anim-r6_flowchart-v2-pointEnd)"></path><path d="M305.406,814.813L305.406,818.979C305.406,823.146,305.406,831.479,305.406,839.146C305.406,846.813,305.406,853.813,305.406,857.313L305.406,860.813" id="L_G_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_G_H_0" data-points="W3sieCI6MzA1LjQwNjI1LCJ5Ijo4MTQuODEyNX0seyJ4IjozMDUuNDA2MjUsInkiOjgzOS44MTI1fSx7IngiOjMwNS40MDYyNSwieSI6ODY0LjgxMjV9XQ==" marker-end="url(#mermaid-anim-r6_flowchart-v2-pointEnd)"></path><path d="M543.641,494L543.641,498.167C543.641,502.333,543.641,510.667,543.641,525.734C543.641,540.802,543.641,562.604,543.641,573.505L543.641,584.406" id="L_D_I_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_I_0" data-points="W3sieCI6NTQzLjY0MDYyNSwieSI6NDk0fSx7IngiOjU0My42NDA2MjUsInkiOjUxOX0seyJ4Ijo1NDMuNjQwNjI1LCJ5Ijo1ODguNDA2MjV9XQ==" marker-end="url(#mermaid-anim-r6_flowchart-v2-pointEnd)"></path><path d="M543.641,642.406L543.641,655.974C543.641,669.542,543.641,696.677,543.641,715.745C543.641,734.813,543.641,745.813,543.641,751.313L543.641,756.813" id="L_I_J_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_I_J_0" data-points="W3sieCI6NTQzLjY0MDYyNSwieSI6NjQyLjQwNjI1fSx7IngiOjU0My42NDA2MjUsInkiOjcyMy44MTI1fSx7IngiOjU0My42NDA2MjUsInkiOjc2MC44MTI1fV0=" marker-end="url(#mermaid-anim-r6_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(198.14453125, 403)"><g class="label" data-id="L_B_C_0" transform="translate(-12.9140625, -12)"><foreignObject width="25.828125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Yes</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(543.640625, 403)"><g class="label" data-id="L_B_D_0" transform="translate(-10.8828125, -12)"><foreignObject width="21.765625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>No</p></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_E_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(90.8828125, 723.8125)"><g class="label" data-id="L_E_F_0" transform="translate(-12.9140625, -12)"><foreignObject width="25.828125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Yes</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(305.40625, 723.8125)"><g class="label" data-id="L_E_G_0" transform="translate(-10.8828125, -12)"><foreignObject width="21.765625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>No</p></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_G_H_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_I_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_I_J_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default node-future" id="flowchart-A-0" transform="translate(317.26171875, 35)"><rect class="basic label-container" style="" x="-114.1796875" y="-27" width="228.359375" height="54"></rect><g class="label" style="" transform="translate(-84.1796875, -12)"><rect></rect><foreignObject width="168.359375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Action Items Created</p></span></div></foreignObject></g></g><g class="node default node-future" id="flowchart-B-1" transform="translate(317.26171875, 239)"><polygon points="127,0 254,-127 127,-254 0,-127" class="label-container" transform="translate(-126.5, 127)"></polygon><g class="label" style="" transform="translate(-100, -12)"><rect></rect><foreignObject width="200" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel"><p>Owner + Date Assigned?</p></span></div></foreignObject></g></g><g class="node default node-future" id="flowchart-C-3" transform="translate(198.14453125, 467)"><rect class="basic label-container" style="" x="-78.6640625" y="-27" width="157.328125" height="54"></rect><g class="label" style="" transform="translate(-48.6640625, -12)"><rect></rect><foreignObject width="97.328125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Owned Item</p></span></div></foreignObject></g></g><g class="node default node-future" id="flowchart-D-5" transform="translate(543.640625, 467)"><rect class="basic label-container" style="" x="-88.1875" y="-27" width="176.375" height="54"></rect><g class="label" style="" transform="translate(-58.1875, -12)"><rect></rect><foreignObject width="116.375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Unowned Item</p></span></div></foreignObject></g></g><g class="node default node-future" id="flowchart-E-7" transform="translate(198.14453125, 615.40625)"><polygon points="71.40625,0 142.8125,-71.40625 71.40625,-142.8125 0,-71.40625" class="label-container" transform="translate(-70.90625, 71.40625)"></polygon><g class="label" style="" transform="translate(-44.40625, -12)"><rect></rect><foreignObject width="88.8125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Prioritized?</p></span></div></foreignObject></g></g><g class="node default node-future" id="flowchart-F-9" transform="translate(90.8828125, 787.8125)"><rect class="basic label-container" style="" x="-82.8828125" y="-27" width="165.765625" height="54"></rect><g class="label" style="" transform="translate(-52.8828125, -12)"><rect></rect><foreignObject width="105.765625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>✓ Completed</p></span></div></foreignObject></g></g><g class="node default node-future" id="flowchart-G-11" transform="translate(305.40625, 787.8125)"><rect class="basic label-container" style="" x="-81.640625" y="-27" width="163.28125" height="54"></rect><g class="label" style="" transform="translate(-51.640625, -12)"><rect></rect><foreignObject width="103.28125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Deprioritized</p></span></div></foreignObject></g></g><g class="node default node-future" id="flowchart-H-13" transform="translate(305.40625, 891.8125)"><rect class="basic label-container" style="" x="-106.71875" y="-27" width="213.4375" height="54"></rect><g class="label" style="" transform="translate(-76.71875, -12)"><rect></rect><foreignObject width="153.4375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Quietly Abandoned</p></span></div></foreignObject></g></g><g class="node default node-future" id="flowchart-I-15" transform="translate(543.640625, 615.40625)"><rect class="basic label-container" style="" x="-91.9453125" y="-27" width="183.890625" height="54"></rect><g class="label" style="" transform="translate(-61.9453125, -12)"><rect></rect><foreignObject width="123.890625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Lingers Forever</p></span></div></foreignObject></g></g><g class="node default node-future" id="flowchart-J-17" transform="translate(543.640625, 787.8125)"><rect class="basic label-container" style="" x="-106.59375" y="-27" width="213.1875" height="54"></rect><g class="label" style="" transform="translate(-76.59375, -12)"><rect></rect><foreignObject width="153.1875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Deleted in Cleanup</p></span></div></foreignObject></g></g></g></g></g></svg></div></div><div class="lg:col-span-2 bg-card rounded-lg border p-5 flex flex-col justify-center min-h-[200px] lg:sticky lg:top-[calc(50vh-100px)] lg:self-start"><button class="space-y-4 text-center w-full cursor-pointer hover:opacity-80 transition-opacity"><div class="text-4xl">▶️</div><h3 class="text-lg font-semibold">Ready to Begin</h3><p class="text-sm text-muted-foreground">Click to walk through this flowchart step by step.</p></button></div></div></div>
+<p class="my-4 text-foreground/80 leading-7">If you want retrospectives to matter, treat action items like commitments. My rule is straightforward: if an action item does not have a name and a date, it is not real. Keep the list short enough to be prioritization, not catharsis. If you are generating more than three to five items per incident, you are not choosing. Pick the changes that will actually reduce recurrence and let the rest go.</p>
+<p class="my-4 text-foreground/80 leading-7">Root-cause techniques can help, but the way many teams use them turns the retrospective into a time sink. "5 whys" works when it drives you past the proximate failure and into the systemic one, yet doing it live in a room full of people often burns forty-five minutes to land on something vague like "we need better testing." That might be true, but it is rarely specific enough to change behavior next week.</p>
+<p class="my-4 text-foreground/80 leading-7">A better pattern is to move discovery into pre-work. The people closest to the incident should write down contributing causes before the meeting, while the details are still fresh. Then the retrospective discussion becomes alignment and prioritization, not a group exercise in circling the same questions. You will get to root causes faster, and you will spare everyone the slow grind of live debugging a narrative.</p>
+<p class="my-4 text-foreground/80 leading-7">Write retrospectives for the reader you will not have in the room. This is documentation, not therapy. Someone should be able to open the doc a year from now and understand what happened, what you saw, what you tried, and why the team made the calls it made. Most writeups capture outcomes but skip context. "We rolled back the deploy" tells you what happened; it does not tell you what signals drove that decision, which alternatives were on the table, or how to recognize the same pattern when it appears again.</p>
+<p class="my-4 text-foreground/80 leading-7">The test is straightforward: write as if you are explaining the incident to a new teammate who joined after it happened. If they had to <a class="text-primary underline hover:text-primary/80 font-medium" href="/projects/incident-command-diagrams" data-discover="true">respond to a similar page</a> tomorrow, would your retrospective give them enough context to make better decisions, faster, under pressure?</p>
+<p class="my-4 text-foreground/80 leading-7">Sharing is part of the leverage, but it needs intent. Retrospectives are most valuable inside engineering because dependent teams need to understand what failed and what changed. A smaller set should be translated for the broader business: the customer-facing incidents that triggered support volume, revenue impact, or executive attention. That version should <a class="text-primary underline hover:text-primary/80 font-medium" href="/projects/statuspage-update" data-discover="true">explain impact and remediation in business terms</a>, without drowning in implementation detail.</p>
+<p class="my-4 text-foreground/80 leading-7">Public retrospectives are different. They are expensive to do well, and most incidents do not justify the investment. When they do, transparency can repair trust, but it should be treated as a strategic choice, not a default workflow.</p>
+<p class="my-4 text-foreground/80 leading-7">The gap between learning and ritual comes down to two decisions. The first is whether retrospective action items are allowed to outrank feature work. That is not an engineering problem; it is leadership signaling. If <a class="text-primary underline hover:text-primary/80 font-medium" href="/projects/slo-tool" data-discover="true">reliability work</a> always loses to roadmap delivery, people notice, and they eventually stop writing meaningful actions because the process has taught them it is pointless.</p>
+<p class="my-4 text-foreground/80 leading-7">The second decision is whether you are willing to change how you operate, not just what you build. It is easy to write "we need better alerting." It is harder to admit that your deploy process lacks guardrails, your ownership boundaries are unclear, or your review culture rewards speed over safety, and then to change those habits. Organizations that actually learn are the ones willing to be uncomfortable, because discomfort is often the price of real operational change.</p></article><div class="mt-12 pt-8 border-t border-border"><h2 class="text-2xl font-bold mb-6">Related Posts</h2><div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"><a class="group block p-4 rounded-lg border border-border hover:border-primary transition-colors" href="/blog/2026-01-22-lessons-from-hundreds-of-incidents" data-discover="true"><h3 class="font-semibold text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">What Hundreds of Incidents Taught Me About Response</h3><p class="text-sm text-muted-foreground mb-3 line-clamp-2">Practical incident response lessons from years at Groq, HashiCorp, and Spotify. What actually works when systems fail.</p><div class="flex items-center gap-2 text-xs text-muted-foreground mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-3 h-3" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg><time datetime="2026-01-22">Jan 22, 2026</time></div><div class="flex flex-wrap gap-1"><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 text-xs">SRE</div><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 text-xs">Incident Management</div></div></a><a class="group block p-4 rounded-lg border border-border hover:border-primary transition-colors" href="/blog/2026-01-27-the-404s-came-back" data-discover="true"><h3 class="font-semibold text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">The 404s Came Back</h3><p class="text-sm text-muted-foreground mb-3 line-clamp-2">Weeks after pre-rendering blog routes to fix Googlebot 404s, the same problem returned for every route added since. Point fixes that don't generalize are not really fixes.</p><div class="flex items-center gap-2 text-xs text-muted-foreground mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-3 h-3" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg><time datetime="2026-01-27">Jan 27, 2026</time></div><div class="flex flex-wrap gap-1"><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 text-xs">SRE</div><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Web Dev</div></div></a><a class="group block p-4 rounded-lg border border-border hover:border-primary transition-colors" href="/blog/2026-01-21-the-slo-math-most-teams-get-wrong" data-discover="true"><h3 class="font-semibold text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">The SLO Math Most Teams Get Wrong</h3><p class="text-sm text-muted-foreground mb-3 line-clamp-2">More nines sounds possible until you do the pager math. Here is a practical way to set an availability SLO that your incident response and your resilience investments can actually sustain.</p><div class="flex items-center gap-2 text-xs text-muted-foreground mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-3 h-3" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg><time datetime="2026-01-21">Jan 21, 2026</time></div><div class="flex flex-wrap gap-1"><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 text-xs">SRE</div></div></a></div></div><div class="mt-12 pt-8 border-t border-border"><h2 class="text-2xl font-bold mb-6">Comments</h2><div class="giscus-container"><div class="text-center text-muted-foreground py-8">Comments will load when you scroll down...</div></div></div><footer class="mt-12 pt-8 border-t border-border"><div class="flex items-center justify-between"><div class="text-sm text-muted-foreground">Written by <a class="hover:text-primary hover:underline transition-colors" href="/blog?author=Dylan" data-discover="true">Dylan</a></div><a href="/blog" class="text-sm text-primary hover:underline">View all posts →</a></div></footer></div></div></main></div></div>
+  
+
+</body></html>
