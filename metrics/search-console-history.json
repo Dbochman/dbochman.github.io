@@ -1,0 +1,785 @@
+[
+  {
+    "timestamp": "2026-01-06T15:56:13.379Z",
+    "date": "2026-01-06",
+    "period": {
+      "start": "2025-12-30",
+      "end": "2026-01-06"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-12T11:03:07.420Z",
+    "date": "2026-01-12",
+    "period": {
+      "start": "2026-01-05",
+      "end": "2026-01-12"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 1,
+      "averageCTR": 0,
+      "averagePosition": 1
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/",
+        "clicks": 0,
+        "impressions": 1
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-15T06:15:50.207Z",
+    "date": "2026-01-15",
+    "period": {
+      "start": "2026-01-08",
+      "end": "2026-01-15"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-16T06:15:59.853Z",
+    "date": "2026-01-16",
+    "period": {
+      "start": "2026-01-09",
+      "end": "2026-01-16"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-17T06:14:14.409Z",
+    "date": "2026-01-17",
+    "period": {
+      "start": "2026-01-10",
+      "end": "2026-01-17"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-18T06:14:54.681Z",
+    "date": "2026-01-18",
+    "period": {
+      "start": "2026-01-11",
+      "end": "2026-01-18"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-19T06:18:42.803Z",
+    "date": "2026-01-19",
+    "period": {
+      "start": "2026-01-12",
+      "end": "2026-01-19"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-20T06:17:02.221Z",
+    "date": "2026-01-20",
+    "period": {
+      "start": "2026-01-13",
+      "end": "2026-01-20"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-21T06:17:12.248Z",
+    "date": "2026-01-21",
+    "period": {
+      "start": "2026-01-14",
+      "end": "2026-01-21"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-22T02:32:00.318Z",
+    "date": "2026-01-22",
+    "period": {
+      "start": "2026-01-15",
+      "end": "2026-01-22"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-22T06:14:02.123Z",
+    "date": "2026-01-22",
+    "period": {
+      "start": "2026-01-15",
+      "end": "2026-01-22"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 0,
+      "averageCTR": 0,
+      "averagePosition": 0
+    },
+    "topPages": []
+  },
+  {
+    "timestamp": "2026-01-23T06:13:31.026Z",
+    "date": "2026-01-23",
+    "period": {
+      "start": "2026-01-16",
+      "end": "2026-01-23"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 2,
+      "averageCTR": 0,
+      "averagePosition": 6
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 2
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-24T06:12:21.976Z",
+    "date": "2026-01-24",
+    "period": {
+      "start": "2026-01-17",
+      "end": "2026-01-24"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 7,
+      "averageCTR": 0,
+      "averagePosition": 6.1
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 7
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-25T06:12:43.168Z",
+    "date": "2026-01-25",
+    "period": {
+      "start": "2026-01-18",
+      "end": "2026-01-25"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 18,
+      "averageCTR": 0,
+      "averagePosition": 5.6
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 18
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-25T16:33:25.387Z",
+    "date": "2026-01-25",
+    "period": {
+      "start": "2026-01-18",
+      "end": "2026-01-25"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 29,
+      "averageCTR": 0,
+      "averagePosition": 5.5
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 29
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-26T06:15:57.171Z",
+    "date": "2026-01-26",
+    "period": {
+      "start": "2026-01-19",
+      "end": "2026-01-26"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 78,
+      "averageCTR": 0,
+      "averagePosition": 5.7
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 78
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-27T06:05:46.985Z",
+    "date": "2026-01-27",
+    "period": {
+      "start": "2026-01-20",
+      "end": "2026-01-27"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 93,
+      "averageCTR": 0,
+      "averagePosition": 5.7
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 93
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-28T06:05:56.133Z",
+    "date": "2026-01-28",
+    "period": {
+      "start": "2026-01-21",
+      "end": "2026-01-28"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 134,
+      "averageCTR": 0,
+      "averagePosition": 5.6
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 134
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-29T06:13:57.508Z",
+    "date": "2026-01-29",
+    "period": {
+      "start": "2026-01-22",
+      "end": "2026-01-29"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 182,
+      "averageCTR": 0,
+      "averagePosition": 3.7
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 145
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 0,
+        "impressions": 35
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 0,
+        "impressions": 2
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-30T06:14:55.683Z",
+    "date": "2026-01-30",
+    "period": {
+      "start": "2026-01-23",
+      "end": "2026-01-30"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 313,
+      "averageCTR": 0.32,
+      "averagePosition": 4.3
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 1,
+        "impressions": 133
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 177
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 0,
+        "impressions": 3
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-30T14:51:56.459Z",
+    "date": "2026-01-30",
+    "period": {
+      "start": "2026-01-23",
+      "end": "2026-01-30"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 372,
+      "averageCTR": 0.27,
+      "averagePosition": 4.6
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 1,
+        "impressions": 180
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 189
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 0,
+        "impressions": 3
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-31T06:09:06.790Z",
+    "date": "2026-01-31",
+    "period": {
+      "start": "2026-01-24",
+      "end": "2026-01-31"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 471,
+      "averageCTR": 0.21,
+      "averagePosition": 6.6
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 1,
+        "impressions": 257
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 207
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 0,
+        "impressions": 7
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-01T06:12:48.350Z",
+    "date": "2026-02-01",
+    "period": {
+      "start": "2026-01-25",
+      "end": "2026-02-01"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 534,
+      "averageCTR": 0.19,
+      "averagePosition": 9.6
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 1,
+        "impressions": 365
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 159
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 0,
+        "impressions": 10
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-02T06:22:07.153Z",
+    "date": "2026-02-02",
+    "period": {
+      "start": "2026-01-26",
+      "end": "2026-02-02"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 562,
+      "averageCTR": 0.18,
+      "averagePosition": 11
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 1,
+        "impressions": 403
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 149
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 0,
+        "impressions": 10
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-02T16:09:57.961Z",
+    "date": "2026-02-02",
+    "period": {
+      "start": "2026-01-26",
+      "end": "2026-02-02"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 569,
+      "averageCTR": 0.18,
+      "averagePosition": 11.6
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 1,
+        "impressions": 408
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 149
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 0,
+        "impressions": 12
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-03T06:16:37.320Z",
+    "date": "2026-02-03",
+    "period": {
+      "start": "2026-01-27",
+      "end": "2026-02-03"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 562,
+      "averageCTR": 0.18,
+      "averagePosition": 12.2
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 1,
+        "impressions": 423
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 127
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 0,
+        "impressions": 12
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-04T06:15:51.076Z",
+    "date": "2026-02-04",
+    "period": {
+      "start": "2026-01-28",
+      "end": "2026-02-04"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 624,
+      "averageCTR": 0.16,
+      "averagePosition": 12.1
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 1,
+        "impressions": 518
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 92
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 0,
+        "impressions": 14
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-05T06:19:16.052Z",
+    "date": "2026-02-05",
+    "period": {
+      "start": "2026-01-29",
+      "end": "2026-02-05"
+    },
+    "summary": {
+      "totalClicks": 0,
+      "totalImpressions": 546,
+      "averageCTR": 0,
+      "averagePosition": 12.7
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 64
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 0,
+        "impressions": 470
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 0,
+        "impressions": 12
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-06T06:17:25.471Z",
+    "date": "2026-02-06",
+    "period": {
+      "start": "2026-01-30",
+      "end": "2026-02-06"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 467,
+      "averageCTR": 0.21,
+      "averagePosition": 11.5
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 1,
+        "impressions": 22
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 40
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 0,
+        "impressions": 405
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-07T06:11:48.176Z",
+    "date": "2026-02-07",
+    "period": {
+      "start": "2026-01-31",
+      "end": "2026-02-07"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 438,
+      "averageCTR": 0.23,
+      "averagePosition": 10.5
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 1,
+        "impressions": 21
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 0,
+        "impressions": 401
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 16
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-08T06:13:07.887Z",
+    "date": "2026-02-08",
+    "period": {
+      "start": "2026-02-01",
+      "end": "2026-02-08"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 356,
+      "averageCTR": 0.28,
+      "averagePosition": 9.8
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 1,
+        "impressions": 20
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 0,
+        "impressions": 332
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 4
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-09T06:24:09.024Z",
+    "date": "2026-02-09",
+    "period": {
+      "start": "2026-02-02",
+      "end": "2026-02-09"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 387,
+      "averageCTR": 0.26,
+      "averagePosition": 10.5
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 1,
+        "impressions": 22
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 0,
+        "impressions": 363
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 2
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-02-10T06:24:28.299Z",
+    "date": "2026-02-10",
+    "period": {
+      "start": "2026-02-03",
+      "end": "2026-02-10"
+    },
+    "summary": {
+      "totalClicks": 1,
+      "totalImpressions": 416,
+      "averageCTR": 0.24,
+      "averagePosition": 9.2
+    },
+    "topPages": [
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-25-dotfiles-for-ai-assisted-development/",
+        "clicks": 1,
+        "impressions": 21
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-15-decap-cms-netlify-setup-guide/",
+        "clicks": 0,
+        "impressions": 393
+      },
+      {
+        "page": "https://dylanbochman.com/blog/2026-01-09-adding-a-cms-to-a-static-site/",
+        "clicks": 0,
+        "impressions": 2
+      }
+    ]
+  }
+]

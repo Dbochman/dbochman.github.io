@@ -1,0 +1,1 @@
+const e={house:{file:"house.js",title:"House Projects",cardCount:14},"julias-gardens":{file:"julias-gardens.js",title:"Julia's Gardens",cardCount:0},roadmap:{file:"roadmap.js",title:"Site Roadmap",cardCount:59}},a=Object.freeze(Object.defineProperty({__proto__:null,kanbanManifest:e},Symbol.toStringTag,{value:"Module"}));export{a as _,e as k};
