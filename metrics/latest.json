@@ -1,0 +1,101 @@
+{
+  "generated": "2026-07-02T07:06:18.572Z",
+  "searchConsole": {
+    "lastCheck": "2026-07-02T07:05:47.347Z",
+    "clicks": 2,
+    "impressions": 2524,
+    "averageCTR": 0.08,
+    "averagePosition": 7.4
+  },
+  "analytics": {
+    "lastCheck": "2026-07-02T07:06:17.842Z",
+    "sessions_7d": 337,
+    "users_7d": 328,
+    "pageviews_7d": 328,
+    "avgSessionDuration": 21,
+    "bounceRate": 0.83,
+    "topPages": [
+      {
+        "page": "/blog",
+        "pageViews": 73
+      },
+      {
+        "page": "/",
+        "pageViews": 53
+      },
+      {
+        "page": "/runbook",
+        "pageViews": 37
+      },
+      {
+        "page": "/projects",
+        "pageViews": 24
+      },
+      {
+        "page": "/blog/2026-01-08-fixing-404-errors-on-github-pages-spas",
+        "pageViews": 24
+      }
+    ]
+  },
+  "webVitals": {
+    "lastCheck": "2026-07-02T07:06:17.842Z",
+    "source": "rum",
+    "metrics": {
+      "TTFB": {
+        "count": 506,
+        "average": 110.38735177865613,
+        "unit": "ms",
+        "ratings": {
+          "good": 496,
+          "needs-improvement": 3,
+          "poor": 6
+        },
+        "goodPercent": 98
+      },
+      "FCP": {
+        "count": 275,
+        "average": 560.4218181818181,
+        "unit": "ms",
+        "ratings": {
+          "good": 261,
+          "needs-improvement": 7,
+          "poor": 6
+        },
+        "goodPercent": 95
+      },
+      "LCP": {
+        "count": 75,
+        "average": 1104.5466666666666,
+        "unit": "ms",
+        "ratings": {
+          "good": 72,
+          "needs-improvement": 0,
+          "poor": 3
+        },
+        "goodPercent": 96
+      },
+      "CLS": {
+        "count": 69,
+        "average": 0.025594202898550727,
+        "unit": "",
+        "ratings": {
+          "good": 60,
+          "needs-improvement": 9,
+          "poor": 0
+        },
+        "goodPercent": 87
+      },
+      "INP": {
+        "count": 11,
+        "average": 44.36363636363637,
+        "unit": "ms",
+        "ratings": {
+          "good": 11,
+          "needs-improvement": 0,
+          "poor": 0
+        },
+        "goodPercent": 100
+      }
+    }
+  }
+}
