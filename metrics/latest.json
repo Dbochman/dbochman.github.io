@@ -1,0 +1,101 @@
+{
+  "generated": "2026-09-19T10:04:05.373Z",
+  "searchConsole": {
+    "lastCheck": "2026-09-19T10:03:35.563Z",
+    "clicks": 1,
+    "impressions": 522,
+    "averageCTR": 0.19,
+    "averagePosition": 7.4
+  },
+  "analytics": {
+    "lastCheck": "2026-09-19T10:04:04.992Z",
+    "sessions_7d": 321,
+    "users_7d": 321,
+    "pageviews_7d": 323,
+    "avgSessionDuration": 11,
+    "bounceRate": 0.86,
+    "topPages": [
+      {
+        "page": "/blog",
+        "pageViews": 77
+      },
+      {
+        "page": "/",
+        "pageViews": 49
+      },
+      {
+        "page": "/runbook",
+        "pageViews": 38
+      },
+      {
+        "page": "/projects/slo-tool",
+        "pageViews": 26
+      },
+      {
+        "page": "/projects",
+        "pageViews": 25
+      }
+    ]
+  },
+  "webVitals": {
+    "lastCheck": "2026-09-19T10:04:04.992Z",
+    "source": "rum",
+    "metrics": {
+      "TTFB": {
+        "count": 504,
+        "average": 71.60515873015873,
+        "unit": "ms",
+        "ratings": {
+          "good": 500,
+          "needs-improvement": 1,
+          "poor": 3
+        },
+        "goodPercent": 99
+      },
+      "FCP": {
+        "count": 283,
+        "average": 301.0636042402827,
+        "unit": "ms",
+        "ratings": {
+          "good": 280,
+          "needs-improvement": 2,
+          "poor": 1
+        },
+        "goodPercent": 99
+      },
+      "LCP": {
+        "count": 84,
+        "average": 970.1785714285714,
+        "unit": "ms",
+        "ratings": {
+          "good": 84,
+          "needs-improvement": 0,
+          "poor": 0
+        },
+        "goodPercent": 100
+      },
+      "CLS": {
+        "count": 84,
+        "average": 0.06475,
+        "unit": "",
+        "ratings": {
+          "good": 56,
+          "needs-improvement": 28,
+          "poor": 0
+        },
+        "goodPercent": 67
+      },
+      "INP": {
+        "count": 10,
+        "average": 124.8,
+        "unit": "ms",
+        "ratings": {
+          "good": 10,
+          "needs-improvement": 0,
+          "poor": 0
+        },
+        "goodPercent": 100
+      }
+    }
+  }
+}
