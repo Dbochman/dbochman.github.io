@@ -1,0 +1,101 @@
+{
+  "generated": "2026-10-10T11:41:45.232Z",
+  "searchConsole": {
+    "lastCheck": "2026-10-10T11:41:08.979Z",
+    "clicks": 0,
+    "impressions": 128,
+    "averageCTR": 0,
+    "averagePosition": 6.5
+  },
+  "analytics": {
+    "lastCheck": "2026-10-10T11:41:44.516Z",
+    "sessions_7d": 330,
+    "users_7d": 327,
+    "pageviews_7d": 336,
+    "avgSessionDuration": 14,
+    "bounceRate": 0.92,
+    "topPages": [
+      {
+        "page": "/blog",
+        "pageViews": 63
+      },
+      {
+        "page": "/",
+        "pageViews": 52
+      },
+      {
+        "page": "/runbook",
+        "pageViews": 42
+      },
+      {
+        "page": "/projects/slo-tool",
+        "pageViews": 26
+      },
+      {
+        "page": "/projects",
+        "pageViews": 25
+      }
+    ]
+  },
+  "webVitals": {
+    "lastCheck": "2026-10-10T11:41:44.516Z",
+    "source": "rum",
+    "metrics": {
+      "TTFB": {
+        "count": 511,
+        "average": 99.77495107632095,
+        "unit": "ms",
+        "ratings": {
+          "good": 491,
+          "needs-improvement": 20,
+          "poor": 0
+        },
+        "goodPercent": 96
+      },
+      "FCP": {
+        "count": 322,
+        "average": 436.82608695652175,
+        "unit": "ms",
+        "ratings": {
+          "good": 305,
+          "needs-improvement": 16,
+          "poor": 1
+        },
+        "goodPercent": 95
+      },
+      "LCP": {
+        "count": 124,
+        "average": 1167.6209677419354,
+        "unit": "ms",
+        "ratings": {
+          "good": 119,
+          "needs-improvement": 3,
+          "poor": 2
+        },
+        "goodPercent": 96
+      },
+      "CLS": {
+        "count": 122,
+        "average": 0.037967213114754095,
+        "unit": "",
+        "ratings": {
+          "good": 96,
+          "needs-improvement": 26,
+          "poor": 0
+        },
+        "goodPercent": 79
+      },
+      "INP": {
+        "count": 19,
+        "average": 100.21052631578948,
+        "unit": "ms",
+        "ratings": {
+          "good": 16,
+          "needs-improvement": 3,
+          "poor": 0
+        },
+        "goodPercent": 84
+      }
+    }
+  }
+}
