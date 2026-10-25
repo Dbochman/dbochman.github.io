@@ -5,13 +5,25 @@
     <link>https://dylanbochman.com/blog</link>
     <description>Articles and insights on Site Reliability Engineering, Incident Management, DevOps, and System Reliability.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Oct 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 24 Oct 2026 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://dylanbochman.com/rss.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://dylanbochman.com/social-preview.png</url>
       <title>Dylan Bochman - Blog</title>
       <link>https://dylanbochman.com/blog</link>
     </image>
+    <item>
+      <title>Taking Control of a Samsung Frame</title>
+      <link>https://dylanbochman.com/blog/2026-10-24-taking-control-of-a-samsung-frame</link>
+      <guid isPermaLink="true">https://dylanbochman.com/blog/2026-10-24-taking-control-of-a-samsung-frame</guid>
+      <description>We gave OpenClaw control of the TV&apos;s native streaming apps and turned off unused advertising and voice services. Then one show request found two gaps in our own tooling.</description>
+      <pubDate>Sat, 24 Oct 2026 00:00:00 GMT</pubDate>
+      <author>dylan@dylanbochman.com (Dylan)</author>
+      <category>Home Automation</category>
+      <category>AI</category>
+      <category>Privacy</category>
+      <category>Reliability</category>
+    </item>
     <item>
       <title>When Updating Isn’t Enough</title>
       <link>https://dylanbochman.com/blog/2026-10-20-emudhra-certificate-incident</link>
