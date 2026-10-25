@@ -16,11 +16,11 @@
       <title>Taking Control of a Samsung Frame</title>
       <link>https://dylanbochman.com/blog/2026-10-24-taking-control-of-a-samsung-frame</link>
       <guid isPermaLink="true">https://dylanbochman.com/blog/2026-10-24-taking-control-of-a-samsung-frame</guid>
-      <description>We gave OpenClaw control of the TV&apos;s native streaming apps and turned off unused advertising and voice services. Then one show request found two gaps in our own tooling.</description>
+      <description>Playback APIs reported success while the screen said otherwise. Bringing a Samsung Frame under automation meant verifying outcomes, tracing service dependencies, and testing recovery.</description>
       <pubDate>Sat, 24 Oct 2026 00:00:00 GMT</pubDate>
       <author>dylan@dylanbochman.com (Dylan)</author>
       <category>Home Automation</category>
-      <category>AI</category>
+      <category>SRE</category>
       <category>Privacy</category>
       <category>Reliability</category>
     </item>
