@@ -1,0 +1,101 @@
+{
+  "generated": "2026-11-07T12:16:13.310Z",
+  "searchConsole": {
+    "lastCheck": "2026-11-07T12:15:26.928Z",
+    "clicks": 1,
+    "impressions": 96,
+    "averageCTR": 1.04,
+    "averagePosition": 8.8
+  },
+  "analytics": {
+    "lastCheck": "2026-11-07T12:16:12.674Z",
+    "sessions_7d": 958,
+    "users_7d": 952,
+    "pageviews_7d": 1016,
+    "avgSessionDuration": 7,
+    "bounceRate": 0.88,
+    "topPages": [
+      {
+        "page": "/blog",
+        "pageViews": 175
+      },
+      {
+        "page": "/",
+        "pageViews": 127
+      },
+      {
+        "page": "/projects/incident-command-diagrams",
+        "pageViews": 101
+      },
+      {
+        "page": "/projects/retry-storm-simulator",
+        "pageViews": 97
+      },
+      {
+        "page": "/runbook",
+        "pageViews": 89
+      }
+    ]
+  },
+  "webVitals": {
+    "lastCheck": "2026-11-07T12:16:12.674Z",
+    "source": "rum",
+    "metrics": {
+      "TTFB": {
+        "count": 1330,
+        "average": 162.18045112781954,
+        "unit": "ms",
+        "ratings": {
+          "good": 1269,
+          "needs-improvement": 37,
+          "poor": 24
+        },
+        "goodPercent": 95
+      },
+      "FCP": {
+        "count": 959,
+        "average": 283.747653806048,
+        "unit": "ms",
+        "ratings": {
+          "good": 949,
+          "needs-improvement": 7,
+          "poor": 3
+        },
+        "goodPercent": 99
+      },
+      "LCP": {
+        "count": 650,
+        "average": 622.1646153846153,
+        "unit": "ms",
+        "ratings": {
+          "good": 649,
+          "needs-improvement": 1,
+          "poor": 0
+        },
+        "goodPercent": 100
+      },
+      "CLS": {
+        "count": 679,
+        "average": 0.06004418262150221,
+        "unit": "",
+        "ratings": {
+          "good": 460,
+          "needs-improvement": 209,
+          "poor": 10
+        },
+        "goodPercent": 68
+      },
+      "INP": {
+        "count": 313,
+        "average": 78.72204472843451,
+        "unit": "ms",
+        "ratings": {
+          "good": 296,
+          "needs-improvement": 17,
+          "poor": 0
+        },
+        "goodPercent": 95
+      }
+    }
+  }
+}
