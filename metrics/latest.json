@@ -1,0 +1,101 @@
+{
+  "generated": "2026-11-28T14:53:45.787Z",
+  "searchConsole": {
+    "lastCheck": "2026-11-28T14:53:21.888Z",
+    "clicks": 1,
+    "impressions": 91,
+    "averageCTR": 1.1,
+    "averagePosition": 13.9
+  },
+  "analytics": {
+    "lastCheck": "2026-11-28T14:53:45.396Z",
+    "sessions_7d": 552,
+    "users_7d": 551,
+    "pageviews_7d": 579,
+    "avgSessionDuration": 4,
+    "bounceRate": 0.88,
+    "topPages": [
+      {
+        "page": "/",
+        "pageViews": 99
+      },
+      {
+        "page": "/blog",
+        "pageViews": 96
+      },
+      {
+        "page": "/runbook",
+        "pageViews": 57
+      },
+      {
+        "page": "/projects/incident-command-diagrams",
+        "pageViews": 48
+      },
+      {
+        "page": "/projects/retry-storm-simulator",
+        "pageViews": 45
+      }
+    ]
+  },
+  "webVitals": {
+    "lastCheck": "2026-11-28T14:53:45.396Z",
+    "source": "rum",
+    "metrics": {
+      "TTFB": {
+        "count": 747,
+        "average": 145.02945113788488,
+        "unit": "ms",
+        "ratings": {
+          "good": 717,
+          "needs-improvement": 14,
+          "poor": 16
+        },
+        "goodPercent": 96
+      },
+      "FCP": {
+        "count": 573,
+        "average": 436.07155322862127,
+        "unit": "ms",
+        "ratings": {
+          "good": 547,
+          "needs-improvement": 13,
+          "poor": 13
+        },
+        "goodPercent": 95
+      },
+      "LCP": {
+        "count": 374,
+        "average": 603.5935828877006,
+        "unit": "ms",
+        "ratings": {
+          "good": 371,
+          "needs-improvement": 1,
+          "poor": 2
+        },
+        "goodPercent": 99
+      },
+      "CLS": {
+        "count": 395,
+        "average": 0.045617721518987346,
+        "unit": "",
+        "ratings": {
+          "good": 295,
+          "needs-improvement": 97,
+          "poor": 3
+        },
+        "goodPercent": 75
+      },
+      "INP": {
+        "count": 149,
+        "average": 82.8993288590604,
+        "unit": "ms",
+        "ratings": {
+          "good": 139,
+          "needs-improvement": 10,
+          "poor": 0
+        },
+        "goodPercent": 93
+      }
+    }
+  }
+}
